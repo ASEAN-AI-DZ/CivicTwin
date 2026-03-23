@@ -24,40 +24,40 @@
 
 CivicTwin AI sử dụng 3 phương pháp AI chuyên biệt:
 
-| Model | Công nghệ | Chức năng | Metrics |
-|-------|-----------|-----------|----------|
-| **TrafficLSTM-v2.1** | PyTorch LSTM (hidden=64, layers=2) | Dự đoán mật độ giao thông 30 phút tương lai | MAE: 0.031, R²: 0.800 |
-| **GNN-BFS Engine** | NetworkX + BFS Algorithm | Phân tích lan truyền ùn tắc qua graph topology | Cascading Analysis |
-| **What-if Simulator** | BFS + Density Heuristic | Mô phỏng tác động đóng đường/sự kiện | Before/After Delta |
+| Model                 | Công nghệ                          | Chức năng                                      | Metrics               |
+| --------------------- | ---------------------------------- | ---------------------------------------------- | --------------------- |
+| **TrafficLSTM-v2.1**  | PyTorch LSTM (hidden=64, layers=2) | Dự đoán mật độ giao thông 30 phút tương lai    | MAE: 0.031, R²: 0.800 |
+| **GNN-BFS Engine**    | NetworkX + BFS Algorithm           | Phân tích lan truyền ùn tắc qua graph topology | Cascading Analysis    |
+| **What-if Simulator** | BFS + Density Heuristic            | Mô phỏng tác động đóng đường/sự kiện           | Before/After Delta    |
 
 ---
 
 ## Tech Stack
 
-| Service | Công nghệ | Port |
-|---------|-----------|------|
-| **Frontend** | Next.js 15 + Tailwind CSS + Mapbox GL JS | 3000 |
-| **Backend** | Laravel 11+ (PHP 8.3) + Sanctum Auth | 8000 |
-| **AI Service** | Python FastAPI (LSTM / GNN) | 8001 |
-| **Mobile** | React Native CLI | — |
-| **Database** | PostgreSQL 16 + PostGIS | 5432 |
-| **Cache** | Redis 7 | 6379 |
-| **Message Broker** | Apache Kafka | 9092 |
-| **WebSocket** | Soketi (Pusher-compatible) | 6001 |
-| **MQTT** | Mosquitto (IoT Sensors) | 1883 |
+| Service            | Công nghệ                                | Port |
+| ------------------ | ---------------------------------------- | ---- |
+| **Frontend**       | Next.js 15 + Tailwind CSS + Mapbox GL JS | 3000 |
+| **Backend**        | Laravel 11+ (PHP 8.3) + Sanctum Auth     | 8000 |
+| **AI Service**     | Python FastAPI (LSTM / GNN)              | 8001 |
+| **Mobile**         | React Native CLI                         | —    |
+| **Database**       | PostgreSQL 16 + PostGIS                  | 5432 |
+| **Cache**          | Redis 7                                  | 6379 |
+| **Message Broker** | Apache Kafka                             | 9092 |
+| **WebSocket**      | Soketi (Pusher-compatible)               | 6001 |
+| **MQTT**           | Mosquitto (IoT Sensors)                  | 1883 |
 
 ---
 
-## Actors (Tác nhân)
+## Actors
 
-| # | Actor | Role | Giao diện | Chức năng chính |
-|---|-------|------|-----------|-----------------|
-| 1 | **Super Admin** | `super_admin` | Admin Panel | Quản trị toàn bộ hệ thống, users, settings, system logs |
-| 2 | **City Admin** | `city_admin` | Admin Panel + Operator Dashboard | Quản lý dữ liệu nền (Nodes/Edges/Sensors), cấu hình AI |
-| 3 | **Traffic Operator** | `traffic_operator` | Operator Command Center | Giám sát giao thông realtime, xử lý sự cố, approve AI recommendations |
-| 4 | **Urban Planner** | `urban_planner` | Operator Dashboard (read-only) | Xem analytics, chạy simulation, lập kế hoạch quy hoạch |
-| 5 | **Emergency Services** | `emergency` | Emergency Console | Xem sự cố khẩn cấp, dispatch lực lượng, request tuyến ưu tiên |
-| 6 | **Citizen** | `citizen` | Citizen Portal (Web + Mobile) | Xem bản đồ giao thông, báo cáo sự cố, nhận cảnh báo |
+| #   | Actor                  | Role               | Giao diện                        | Chức năng chính                                                       |
+| --- | ---------------------- | ------------------ | -------------------------------- | --------------------------------------------------------------------- |
+| 1   | **Super Admin**        | `super_admin`      | Admin Panel                      | Quản trị toàn bộ hệ thống, users, settings, system logs               |
+| 2   | **City Admin**         | `city_admin`       | Admin Panel + Operator Dashboard | Quản lý dữ liệu nền (Nodes/Edges/Sensors), cấu hình AI                |
+| 3   | **Traffic Operator**   | `traffic_operator` | Operator Command Center          | Giám sát giao thông realtime, xử lý sự cố, approve AI recommendations |
+| 4   | **Urban Planner**      | `urban_planner`    | Operator Dashboard (read-only)   | Xem analytics, chạy simulation, lập kế hoạch quy hoạch                |
+| 5   | **Emergency Services** | `emergency`        | Emergency Console                | Xem sự cố khẩn cấp, dispatch lực lượng, request tuyến ưu tiên         |
+| 6   | **Citizen**            | `citizen`          | Citizen Portal (Web + Mobile)    | Xem bản đồ giao thông, báo cáo sự cố, nhận cảnh báo                   |
 
 ---
 
@@ -80,22 +80,26 @@ CivicTwinAI/
 ## Frontend Pages (Next.js App Router)
 
 ### Citizen Portal `/map` `/my-reports` `/alerts` `/profile`
+
 - Bản đồ giao thông realtime (Mapbox) với Search, GPS, Sidebar sự cố
 - Form báo cáo sự cố + lịch sử reports + cảnh báo khu vực + hồ sơ cá nhân
 
 ### Operator Command Center `/dashboard/*`
+
 - Dashboard Overview (KPI cards + Mini Map + Recent Incidents + AI Feed)
 - Incidents Management (CRUD + Filter) | AI Predictions (Master-Detail)
 - Traffic Simulation (What-if) | Recommendations (Approve/Reject)
 - CCTV Monitor (Grid 3x3) | Analytics (Charts + Reports)
 
 ### Admin Panel `/admin/*`
+
 - Users Management (CRUD + Role assignment cho 6 roles)
 - Master Data (Nodes / Edges / Sensors — graph topology)
 - System Settings (General, AI Engine, Notifications, Data Retention)
 - System Logs (Audit trail với search + filter)
 
 ### Emergency Console `/emergency/*`
+
 - Situation Map (live map focus vào sự cố khẩn cấp)
 - Active Incidents (Casualties, Vehicles, Responders + Dispatch/Backup)
 - Priority Route (Request đường ưu tiên + ETA + Signal Clearing)
@@ -157,4 +161,4 @@ Citizen báo sự cố
 
 ## License
 
-MIT License — Duy Tan University, Vietnam
+Dự án này được phân phối dưới [GNU General Public License v3.0](https://github.com/ASEAN-AI-DZ/CivicTwin/blob/master/LICENSE). Xem file `LICENSE` để biết thêm chi tiết.
