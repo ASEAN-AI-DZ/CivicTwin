@@ -27,7 +27,7 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     }
 
     // Send current locale to backend for translated responses
-    const locale = localStorage.getItem('civictwin-locale') || 'vi';
+    const locale = localStorage.getItem('civictwin-locale') || 'en';
     config.headers['Accept-Language'] = locale;
   }
   return config;
@@ -54,10 +54,12 @@ api.interceptors.response.use(
 
     switch (status) {
       case 401:
-        if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
+        if (typeof window !== 'undefined') {
           localStorage.removeItem('token');
-          toast.error(message);
-          window.location.href = '/';
+          if (!['/', '/login'].includes(window.location.pathname)) {
+            toast.error(message);
+            window.location.href = '/';
+          }
         }
         break;
       case 403:
