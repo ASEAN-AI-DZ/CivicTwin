@@ -8,7 +8,7 @@
 
 ---
 
-## 📋 Tóm tắt Điều hành 
+## 📋 Thực trạng đô thị
 
 ### Bối cảnh
 Trong bối cảnh đô thị hóa diễn ra với tốc độ chóng mặt tại các thành phố lớn của Việt Nam, đặc biệt là **Đà Nẵng** – một đô thị ven biển đang phát triển mạnh mẽ về du lịch, kinh tế và dân số – hệ thống quản lý đô thị truyền thống đang đối mặt với những thách thức nghiêm trọng.
@@ -60,7 +60,7 @@ Trong bối cảnh đô thị hóa diễn ra với tốc độ chóng mặt tạ
 - ✅ **Hai chiều:** dữ liệu thực → cập nhật digital twin; quyết định digital twin → áp dụng lại thực tế
 
 ### Khả năng của Digital Twin
-1. **Mô phỏng:** Thử nghiệm các kịch bản mà không cần thay đổi thực tế (ví dụ: thử va chạm xe mà không đâm thật)
+1. **Mô phỏng:** Thử nghiệm các kịch bản mà không cần thay đổi thực tế 
 2. **Dự đoán:** Dự báo sự cố, hỏng hóc, hiệu suất tương lai
 3. **Tối ưu hóa:** Tìm ra cách vận hành tốt nhất, tiết kiệm chi phí, giảm rủi ro
 4. **Phân tích hai chiều:** Dữ liệu thực ↔ Digital Twin → ra quyết định chuẩn xác
@@ -80,37 +80,26 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 - Những khu vực nào sắp bị ảnh hưởng và cần cảnh báo sớm?
 - Giải pháp điều phối giao thông tối ưu là gì?
 
-**Đó chính là CivicTwin AI** – "cặp song sinh kỹ thuật số" giúp chuyển đổi từ giám sát thụ động sang quản lý chủ động và thông minh cho giao thông đô thị.
-
-### Tại sao gọi là "Twin"?
-**"Twin"** (song sinh) mang ý nghĩa:
-- ✅ **Sống động và đồng bộ thời gian thực** – không phải bản sao tĩnh
-- ✅ Dữ liệu từ thế giới thực (cảm biến, camera, mưa, lưu lượng xe, mực nước,…) **liên tục cập nhật** vào bản sao số
-- ✅ Các thuật toán AI **xử lý nhanh** đưa ra kết quả trong thời gian thực
-- ✅ Mô phỏng trước những gì sẽ xảy ra → **dự đoán, dự báo kịp thời**
-- ✅ Một thực thể ảo có thể thay đổi, có thể thử nghiệm rủi ro **mà không làm hại thế giới thật**
-
-
 ---
 
 <!-- ## 🏗️ Kiến trúc & Công nghệ -->
 
-## 📊 Các Đối tượng Hướng đến
-### 👨‍💼 1. Nhà Quy hoạch & Quan chức Chính quyền
+## 📊 Các Đối tượng hướng đến
+### 👨‍💼 1. Nhà quy hoạch & Quan chức chính quyền
 - Dự báo tác động của các dự án hạ tầng trước khi triển khai
-- Mô phỏng kịch bản what-if để tối ưu hóa quyết định
+- Mô phỏng kịch bản để tối ưu hóa quyết định
 - Dashboard dữ liệu để ra quyết định nhanh, chính xác
 
-### 👷 2. Kỹ sư & Chuyên gia Giao thông Đô thị
+### 👷 2. Kỹ sư & Chuyên gia Giao thông đô thị
 - Phân tích chi tiết lưu lượng giao thông và rủi ro
 - Mô phỏng hiệu quả của các biện pháp tương ứng
 - Tối ưu hóa hạ tầng giao thông
 
-### 🏛️ 3. Tổ chức Cộng đồng & NGO
+### 🏛️ 3. Tổ chức cộng đồng & NGO
 - Tất cả công dân có thể sử dụng công cụ để đề xuất dự án
 - Minh bạch hóa tác động kinh tế-xã hội-môi trường
 
-### 📚 4. Nhà Nghiên cứu & Sinh viên
+### 📚 4. Nhà nghiên cứu & Sinh viên
 - Truy cập dữ liệu mở để nghiên cứu
 - Mô hình hóa các vấn đề đô thị phức tạp
 
@@ -120,7 +109,7 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 ## 🚀 Chức năng Chính của CivicTwin AI
 
 ### 1. **Real-time Digital Twin**
-- Mô hình hóa toàn bộ đô thị dưới dạng đồ thị mạng (graph network)
+- Mô hình hóa toàn bộ đô thị dưới dạng đồ thị mạng 
 - Cập nhật liên tục từ camera giao thông, cảm biến IoT, dữ liệu thời tiết
 - Hiển thị trạng thái thực tế của từng khu vực trên bản đồ tương tác
 
@@ -131,7 +120,6 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 ### 3. **Dashboard Hỗ trợ Ra quyết định**
 - **Impact Score:** Điểm tác động tổng hợp (0–100)
 - **Radar Chart:** Trực quan 5 chỉ số (Economic, Environmental, Accessibility, Equity, Safety)
-- **Explanation AI:** "Vì sao dự án này tốt/xấu?" – bằng ngôn ngữ tự nhiên
 
 ### 4. **Hỗ trợ Ưu tiên Khẩn cấp**
 - Khi tai nạn/ngập lụt xảy ra, AI xác định **tuyến đường nhanh nhất** cho xe cứu thương/cứu hỏa
@@ -150,8 +138,7 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 | **Backend** | Node.js + Express.js |
 | **AI Core** | Amazon Bedrock + Amazon Nova |
 | **Visualization** | Charts.js, Leaflet/Mapbox |
-| **Database** | PostgreSQL + PostGIS (for geospatial data) |
-| **Advanced (R&D)** | 3D Gaussian Splatting, Agent-Based Modeling, Blockchain |
+| **Database** | PostgreSQL + PostGIS |
 
 ---
 
@@ -196,7 +183,7 @@ Dự án không chỉ giải quyết vấn đề giao thông hôm nay mà còn g
 
 ## 📄 Giấy phép
 
-Dự án này được phân phối dưới **GNU General Public License v3.0** hoặc tương đương. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+Dự án này được phân phối dưới **GNU General Public License v3.0**. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
 
 ---
 
