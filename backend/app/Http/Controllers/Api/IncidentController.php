@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Incident;
 use App\Jobs\CallAIPrediction;
+use App\Events\IncidentCreated;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,6 +38,12 @@ class IncidentController extends Controller
         $query = Incident::with(['reporter', 'assignee'])
             ->latest();
 
+        // Citizens only see incidents they reported
+        $user = $request->user();
+        if ($user && $user->roles && in_array('citizen', $user->roles->pluck('name')->toArray())) {
+            $query->where('reported_by', $user->id);
+        }
+
         if ($request->has('status')) {
             $query->where('status', $request->status);
         }
@@ -54,15 +61,23 @@ class IncidentController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string|min:10',
             'type' => 'required|in:accident,congestion,construction,weather,other',
             'severity' => 'required|in:low,medium,high,critical',
             'source' => 'required|in:operator,citizen,auto_detected',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
+            'location_name' => 'required|string|min:5',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
             'affected_edge_ids' => 'nullable|array',
             'affected_edge_ids.*' => 'integer|exists:edges,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
+
+        $metadata = [];
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('incidents', 'public');
+            $metadata['images'] = [url('storage/' . $path)];
+        }
 
         $incident = Incident::create([
             'title' => $validated['title'],
@@ -71,7 +86,7 @@ class IncidentController extends Controller
             'severity' => $validated['severity'],
             'source' => $validated['source'],
             'reported_by' => $request->user()->id,
-            'metadata' => [],
+            'metadata' => $metadata,
         ]);
 
         $isPostgres = DB::connection()->getDriverName() === 'pgsql';
@@ -93,6 +108,9 @@ class IncidentController extends Controller
             );
         }
 
+        // Broadcast realtime event to all connected clients
+        IncidentCreated::dispatch($incident);
+
         // Dispatch AI prediction job for medium+ severity
         if (in_array($validated['severity'], ['medium', 'high', 'critical'])) {
             CallAIPrediction::dispatch($incident);
@@ -103,7 +121,7 @@ class IncidentController extends Controller
 
     public function show(Incident $incident): JsonResponse
     {
-        $incident->load(['reporter', 'assignee', 'predictions.predictionEdges', 'recommendations']);
+        $incident->load(['reporter', 'assignee', 'predictions.predictionEdges.edge', 'recommendations']);
 
         $coords = null;
         if (DB::connection()->getDriverName() === 'pgsql') {

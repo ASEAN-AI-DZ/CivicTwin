@@ -30,18 +30,6 @@ Câu này phải xuất hiện ở:
 
 ---
 
-## 🗓️ Timeline & Cần chuẩn bị
-
-| Ngày | Sự kiện | Sếp cần làm |
-|------|---------|-------------|
-| **12/04** | Nộp Abstract 1 trang | ✅ Dùng bản nháp bên dưới |
-| **23/04** | Virtual Opening + Workshop 1-2 | Tham gia, networking |
-| **05/05** | Workshop 3: Prototyping | Có thể show prototype sẵn |
-| **25/06** | Virtual Semi-Final | Demo qua video call |
-| **31/07** | Grand Finale @ DTU Đà Nẵng | Demo live trước BGK |
-
----
-
 ## 📄 BẢN NHÁP ABSTRACT 1 TRANG (Deadline 12/04)
 
 > *Sếp chỉnh sửa thêm thông tin team rồi nộp*
