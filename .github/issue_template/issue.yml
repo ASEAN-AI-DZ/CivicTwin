@@ -1,54 +1,36 @@
-name: 📌 New Issue
-description: Tạo issue cho bug / feature / task
-title: "[TYPE] "
-labels: []
+name: " Báo lỗi"
+description: "Báo lỗi có thể tái hiện"
+title: "🐛 [Bug]: "
+labels: ["bug","triage"]
 body:
-  - type: dropdown
-    id: type
+  - type: checkboxes
+    id: confirm
     attributes:
-      label: 📂 Loại issue
+      label: Xác nhận
       options:
-        - 🐛 Bug
-        - ✨ Feature
-        - 📋 Task
-        - ❓ Question
-    validations:
-      required: true
-
-  - type: input
-    id: summary
-    attributes:
-      label: 📝 Tiêu đề ngắn
-      placeholder: Mô tả ngắn gọn vấn đề / yêu cầu
-    validations:
-      required: true
-
-  - type: textarea
-    id: description
-    attributes:
-      label: 📖 Mô tả chi tiết
-      placeholder: |
-        Mô tả rõ ràng vấn đề hoặc yêu cầu
-
+        - label: Tôi đã tìm kiếm trùng lặp (Issues/PRs)
+          required: true
   - type: textarea
     id: steps
-    attributes:
-      label: 🔁 Steps (nếu là bug)
-      placeholder: |
-        1. ...
-        2. ...
-        3. ...
-
+    attributes: { label: Bước tái hiện, placeholder: "1) ...
+2) ...
+3) ..." }
+    validations: { required: true }
   - type: textarea
     id: expected
-    attributes:
-      label: ✅ Kết quả mong đợi
-
+    attributes: { label: Kỳ vọng }
+    validations: { required: true }
+  - type: textarea
+    id: actual
+    attributes: { label: Thực tế }
+    validations: { required: true }
+  - type: input
+    id: env
+    attributes: { label: Môi trường, placeholder: "OS, Browser/App, API env (prod/stg/dev)..." }
+  - type: textarea
+    id: logs
+    attributes: { label: Log/Lỗi màn hình, render: shell }
   - type: dropdown
-    id: priority
-    attributes:
-      label: 🔥 Độ ưu tiên
-      options:
-        - Low
-        - Medium
-        - High
+    id: severity
+    attributes: { label: Mức độ, options: [critical, high, medium, low] }
+    validations: { required: true }
