@@ -1,0 +1,54 @@
+name: 📌 New Issue
+description: Tạo issue cho bug / feature / task
+title: "[TYPE] "
+labels: []
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 📂 Loại issue
+      options:
+        - 🐛 Bug
+        - ✨ Feature
+        - 📋 Task
+        - ❓ Question
+    validations:
+      required: true
+
+  - type: input
+    id: summary
+    attributes:
+      label: 📝 Tiêu đề ngắn
+      placeholder: Mô tả ngắn gọn vấn đề / yêu cầu
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 📖 Mô tả chi tiết
+      placeholder: |
+        Mô tả rõ ràng vấn đề hoặc yêu cầu
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🔁 Steps (nếu là bug)
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: ✅ Kết quả mong đợi
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🔥 Độ ưu tiên
+      options:
+        - Low
+        - Medium
+        - High
