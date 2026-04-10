@@ -1,6 +1,6 @@
 # �️ CivicTwin AI — Digital Twin & AI Platform cho Quản lý Đô thị Thông minh
 
-<!-- ![s](/static/img/Banner.png) -->
+![s](/static/BannerCivic.png)
 
 > _"Từ phản ứng thụ động sang dự đoán chủ động — AI là cộng sự của nhà quy hoạch"_
 
@@ -11,19 +11,22 @@
 ## 📋 Thực trạng đô thị
 
 ### Bối cảnh
+
 Trong bối cảnh đô thị hóa diễn ra với tốc độ chóng mặt tại các thành phố lớn của Việt Nam, đặc biệt là **Đà Nẵng** – một đô thị ven biển đang phát triển mạnh mẽ về du lịch, kinh tế và dân số – hệ thống quản lý đô thị truyền thống đang đối mặt với những thách thức nghiêm trọng.
 
 **Thực trạng:**
+
 - Dân số Đà Nẵng đã vượt **1,1 triệu người** với tốc độ tăng trưởng hàng năm **4,1%** (2023–2025).
 - Mật độ phương tiện giao thông tăng vọt → ùn tắc kéo dài trong giờ cao điểm.
 - Ngập úng đô thị do mưa lớn cực đoan liên quan đến biến đổi khí hậu.
 - Hệ thống hiện tại chủ yếu giám sát (monitoring) nhưng thiếu khả năng dự đoán (prediction) và mô phỏng (simulation).
----
 
+---
 
 ## 🎯 Mục tiêu Dự án
 
 ### Mục tiêu Ngắn hạn
+
 1. **Xây dựng Digital Twin toàn diện** cho đô thị
 2. **Triển khai AI dự đoán:**
    - Lưu lượng giao thông từ dữ liệu lịch sử và thời gian thực
@@ -32,6 +35,7 @@ Trong bối cảnh đô thị hóa diễn ra với tốc độ chóng mặt tạ
 4. **Dashboard hỗ trợ ra quyết định:** Cung cấp giao diện trực quan cho chính quyền và người dân
 
 ### Mục tiêu Dài hạn
+
 - Tích hợp vào hệ thống quản lý đô thị hiện có
 - Mở rộng sang năng lượng, môi trường, giao thông công cộng
 - Hỗ trợ **Chiến lược Quốc gia về Cách mạng Công nghiệp 4.0** của Việt Nam
@@ -47,31 +51,37 @@ Trong bối cảnh đô thị hóa diễn ra với tốc độ chóng mặt tạ
 ## 🔬 Digital Twin là gì?
 
 ### Định nghĩa
+
 **Digital Twin (Bản sao số)** là khái niệm cốt lõi trong khoa học công nghệ hiện đại, đặc biệt trong Cách mạng Công nghiệp 4.0. Đây là **bản sao kỹ thuật số (virtual replica)** của một thực thể vật lý – có thể là một máy móc, quy trình sản xuất, tòa nhà, xe hơi, bệnh viện, hoặc thậm chí cả một thành phố/hệ thống hạ tầng lớn.
 
 **Digital Twin KHÔNG PHẢI:**
+
 - ❌ Hình ảnh tĩnh hay mô hình 3D đơn giản
 - ❌ Bản chụp giống như một bức ảnh
 
 **Digital Twin là:**
+
 - ✅ Một **hệ thống động**, được cập nhật liên tục dữ liệu thời gian thực
 - ✅ Tích hợp dữ liệu từ: cảm biến, IoT, camera, dữ liệu vệ tinh,…
 - ✅ **Phản ánh chính xác** tình trạng của "bản gốc"
 - ✅ **Hai chiều:** dữ liệu thực → cập nhật digital twin; quyết định digital twin → áp dụng lại thực tế
 
 ### Khả năng của Digital Twin
-1. **Mô phỏng:** Thử nghiệm các kịch bản mà không cần thay đổi thực tế 
+
+1. **Mô phỏng:** Thử nghiệm các kịch bản mà không cần thay đổi thực tế
 2. **Dự đoán:** Dự báo sự cố, hỏng hóc, hiệu suất tương lai
 3. **Tối ưu hóa:** Tìm ra cách vận hành tốt nhất, tiết kiệm chi phí, giảm rủi ro
 4. **Phân tích hai chiều:** Dữ liệu thực ↔ Digital Twin → ra quyết định chuẩn xác
+
 ---
 
 ## 🌐 CivicTwin AI là gì?
 
 ### Khái niệm
+
 Hãy tưởng tượng bạn đang chơi một trò chơi mô phỏng như **SimCity**, nhưng **không phải trò chơi giả tưởng** – mà là một **"bản sao ảo" cực kỳ chính xác** của hệ thống giao thông và hạ tầng đô thị thực tế.
 
-Với CivicTwin AI, toàn bộ mạng lưới giao thông được mô hình hóa dưới dạng **graph network** (Node = giao lộ, Edge = tuyến đường), được cập nhật liên tục từ camera, cảm biến IoT và dữ liệu thời tiết. 
+Với CivicTwin AI, toàn bộ mạng lưới giao thông được mô hình hóa dưới dạng **graph network** (Node = giao lộ, Edge = tuyến đường), được cập nhật liên tục từ camera, cảm biến IoT và dữ liệu thời tiết.
 
 Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình hiện tại mà còn **ngay lập tức mô phỏng và dự đoán** tác động trong **15–30 phút tới**:
 
@@ -85,73 +95,79 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 <!-- ## 🏗️ Kiến trúc & Công nghệ -->
 
 ## 📊 Các Đối tượng hướng đến
+
 ### 👨‍💼 1. Nhà quy hoạch & Quan chức chính quyền
+
 - Dự báo tác động của các dự án hạ tầng trước khi triển khai
 - Mô phỏng kịch bản để tối ưu hóa quyết định
 - Dashboard dữ liệu để ra quyết định nhanh, chính xác
 
 ### 👷 2. Kỹ sư & Chuyên gia Giao thông đô thị
+
 - Phân tích chi tiết lưu lượng giao thông và rủi ro
 - Mô phỏng hiệu quả của các biện pháp tương ứng
 - Tối ưu hóa hạ tầng giao thông
 
 ### 🏛️ 3. Tổ chức cộng đồng & NGO
+
 - Tất cả công dân có thể sử dụng công cụ để đề xuất dự án
 - Minh bạch hóa tác động kinh tế-xã hội-môi trường
 
 ### 📚 4. Nhà nghiên cứu & Sinh viên
+
 - Truy cập dữ liệu mở để nghiên cứu
 - Mô hình hóa các vấn đề đô thị phức tạp
-
 
 ---
 
 ## 🚀 Chức năng Chính của CivicTwin AI
 
 ### 1. **Real-time Digital Twin**
-- Mô hình hóa toàn bộ đô thị dưới dạng đồ thị mạng 
+
+- Mô hình hóa toàn bộ đô thị dưới dạng đồ thị mạng
 - Cập nhật liên tục từ camera giao thông, cảm biến IoT, dữ liệu thời tiết
 - Hiển thị trạng thái thực tế của từng khu vực trên bản đồ tương tác
 
 ### 2. **AI Dự đoán**
+
 - **Dự báo lưu lượng giao thông** trong tương lai gần
 - **Cảnh báo ngập úng** dựa trên dữ liệu thời tiết + cảm biến mực nước
 
 ### 3. **Dashboard Hỗ trợ Ra quyết định**
+
 - **Impact Score:** Điểm tác động tổng hợp (0–100)
 - **Radar Chart:** Trực quan 5 chỉ số (Economic, Environmental, Accessibility, Equity, Safety)
 
 ### 4. **Hỗ trợ Ưu tiên Khẩn cấp**
+
 - Khi tai nạn/ngập lụt xảy ra, AI xác định **tuyến đường nhanh nhất** cho xe cứu thương/cứu hỏa
 - **Cảnh báo lan truyền:** Dự báo ùn tắc sẽ lan sang những khu vực nào
 - **Hướng dẫn sơ tán:** Khuyến nghị tuyến đường an toàn cho người dân
 
 ---
 
-
-
 ## 📚 Công nghệ Sử dụng
 
-| Thành phần | Công nghệ |
-|----------|----------|
-| **Frontend** | Vite + vanilla JS + HTML5, Leaflet/Mapbox |
-| **Backend** | Node.js + Express.js |
-| **AI Core** | Amazon Bedrock + Amazon Nova |
-| **Visualization** | Charts.js, Leaflet/Mapbox |
-| **Database** | PostgreSQL + PostGIS |
+| Thành phần        | Công nghệ                                 |
+| ----------------- | ----------------------------------------- |
+| **Frontend**      | Vite + vanilla JS + HTML5, Leaflet/Mapbox |
+| **Backend**       | Node.js + Express.js                      |
+| **AI Core**       | Amazon Bedrock + Amazon Nova              |
+| **Visualization** | Charts.js, Leaflet/Mapbox                 |
+| **Database**      | PostgreSQL + PostGIS                      |
 
 ---
 
 ## 🌟 So Sánh CivicTwin AI Với Các Hệ Thống Hiện Tại
 
-| Tiêu chí | ❌ Các Hệ thống Hiện tại | ✅ CivicTwin |
-|----------|------------------------|----------------|
-| Cách tiếp cận | Chỉ giám sát (monitoring) – dữ liệu quá khứ & hiện tại | Giám sát + Dự đoán – từ dữ liệu quá khứ & hiện tại → tương lai |
-| Phản ứng | Thụ động (reactive) – chỉ hành động sau sự cố | Chủ động (proactive) – dự báo và ngăn chặn trước khi xảy ra |
-| Khả năng dự báo | Thiếu dự báo – không biết tương lai | Có dự báo – hỗ trợ ra quyết định sớm |
-| Phân tích kịch bản | Không có hoặc rất hạn chế | Mô phỏng what-if – thử trước, trực quan kết quả |
-| Rủi ro & chi phí | Rủi ro cao – lãng phí ngân sách, tác động không mong muốn | Giảm rủi ro – tối ưu chi phí và hiệu quả |
-| Tính minh bạch | Thấp, khó kiểm chứng | Minh bạch + Xác thực – AI giải thích, dữ liệu mở, cộng đồng tham gia |
+| Tiêu chí           | ❌ Các Hệ thống Hiện tại                                  | ✅ CivicTwin                                                         |
+| ------------------ | --------------------------------------------------------- | -------------------------------------------------------------------- |
+| Cách tiếp cận      | Chỉ giám sát (monitoring) – dữ liệu quá khứ & hiện tại    | Giám sát + Dự đoán – từ dữ liệu quá khứ & hiện tại → tương lai       |
+| Phản ứng           | Thụ động (reactive) – chỉ hành động sau sự cố             | Chủ động (proactive) – dự báo và ngăn chặn trước khi xảy ra          |
+| Khả năng dự báo    | Thiếu dự báo – không biết tương lai                       | Có dự báo – hỗ trợ ra quyết định sớm                                 |
+| Phân tích kịch bản | Không có hoặc rất hạn chế                                 | Mô phỏng what-if – thử trước, trực quan kết quả                      |
+| Rủi ro & chi phí   | Rủi ro cao – lãng phí ngân sách, tác động không mong muốn | Giảm rủi ro – tối ưu chi phí và hiệu quả                             |
+| Tính minh bạch     | Thấp, khó kiểm chứng                                      | Minh bạch + Xác thực – AI giải thích, dữ liệu mở, cộng đồng tham gia |
 
 ---
 
@@ -170,11 +186,13 @@ Dự án không chỉ giải quyết vấn đề giao thông hôm nay mà còn g
 ## 📞 Liên hệ & Đóng góp
 
 ### Liên hệ Dự án
+
 - **Lead Researcher:** [Contact Information]
 - **GitHub Repository:** [Repository Link]
 - **Documentation:** [Docs Link]
 
 ### Cách Đóng góp
+
 - Fork repository → tạo feature branch → mở Pull Request
 - Báo lỗi: Tạo GitHub Issue với mô tả chi tiết, steps to reproduce
 - Đề xuất tính năng mới: Tham gia discussions
