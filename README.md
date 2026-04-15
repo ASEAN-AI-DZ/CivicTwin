@@ -1,10 +1,31 @@
-# �️ CivicTwin AI — Digital Twin & AI Platform cho Quản lý Đô thị Thông minh
+﻿# �️ CivicTwin AI — Digital Twin & AI Platform cho Quản lý Đô thị Thông minh
 
-![s](/static/BannerCivic.png)
+
+<div align="center">
+  <a href="https://civic-twin-ai-six.vercel.app/">
+    <img src="https://img.shields.io/badge/🚀_Website-CivicTwin-00C853?style=for-the-badge" alt="Demo System"/>
+  </a>
+  <!-- <a href="https://nguyenthai11103.github.io/DTU-CivicTwin-documents/intro">
+    <img src="https://img.shields.io/badge/📚_Documentation-CivicTwin-1976D2?style=for-the-badge" alt="Documentation"/>
+  </a> -->
+  <br/>
+  
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="License: GPL-3.0"/>
+  </a>
+  
+  <br/>
+  
+  <a href="CONTRIBUTING.md">🤝 Đóng Góp</a> •
+  <a href="CHANGELOG.md">📜 Changelog</a>
+
+</div>
+
+![s](/static/banner.png)
 
 > _"Từ phản ứng thụ động sang dự đoán chủ động — AI là cộng sự của nhà quy hoạch"_
 
-**CivicTwin AI** là nền tảng tiên tiến tích hợp **Digital Twin (Bản sao số)** và **AI (Trí tuệ Nhân tạo)**, được thiết kế để chuyển đổi cách quản lý đô thị từ phản ứng (reactive) sang dự đoán và chủ động (predictive & proactive). Hệ thống mô hình hóa toàn bộ đô thị dưới dạng đồ thị mạng động, tích hợp dữ liệu thời gian thực từ camera, cảm biến IoT, dữ liệu thời tiết và phản ánh công dân để hỗ trợ ra quyết định nhanh chóng, chính xác và bền vững.
+**CivicTwin AI** là nền tảng tiên tiến tích hợp **Digital Twin (Bản sao số)** và **AI (Trí tuệ Nhân tạo)**, được thiết kế để chuyển đổi cách quản lý đô thị từ phản ứng sang dự đoán và chủ động . Hệ thống mô hình hóa toàn bộ đô thị dưới dạng đồ thị mạng động, tích hợp dữ liệu thời gian thực từ camera, cảm biến IoT, dữ liệu thời tiết và phản ánh công dân để hỗ trợ ra quyết định nhanh chóng, chính xác và bền vững.
 
 ---
 
@@ -12,14 +33,13 @@
 
 ### Bối cảnh
 
-Trong bối cảnh đô thị hóa diễn ra với tốc độ chóng mặt tại các thành phố lớn của Việt Nam, đặc biệt là **Đà Nẵng** – một đô thị ven biển đang phát triển mạnh mẽ về du lịch, kinh tế và dân số – hệ thống quản lý đô thị truyền thống đang đối mặt với những thách thức nghiêm trọng.
+Trong bối cảnh đô thị hóa diễn ra nhanh chóng tại các thành phố lớn trên cả nước, hệ thống quản lý đô thị truyền thống đang đối mặt với nhiều thách thức nghiêm trọng.
 
 **Thực trạng:**
-
-- Dân số Đà Nẵng đã vượt **1,1 triệu người** với tốc độ tăng trưởng hàng năm **4,1%** (2023–2025).
-- Mật độ phương tiện giao thông tăng vọt → ùn tắc kéo dài trong giờ cao điểm.
-- Ngập úng đô thị do mưa lớn cực đoan liên quan đến biến đổi khí hậu.
-- Hệ thống hiện tại chủ yếu giám sát (monitoring) nhưng thiếu khả năng dự đoán (prediction) và mô phỏng (simulation).
+- Mật độ phương tiện giao thông tăng mạnh, dẫn đến ùn tắc kéo dài trong giờ cao điểm.
+- Ngập úng đô thị thường xuyên xảy ra do mưa lớn cực đoan và biến đổi khí hậu.
+- Hầu hết các hệ thống hiện tại chỉ tập trung vào giám sát (monitoring) theo thời gian thực, nhưng thiếu khả năng dự đoán (prediction) và mô phỏng (simulation) các tác động của sự cố.
+- Phản ứng xử lý chậm, khó điều phối giao thông tối ưu và thiếu công cụ hỗ trợ ra quyết định kịp thời cho cơ quan quản lý.
 
 ---
 
@@ -30,21 +50,19 @@ Trong bối cảnh đô thị hóa diễn ra với tốc độ chóng mặt tạ
 1. **Xây dựng Digital Twin toàn diện** cho đô thị
 2. **Triển khai AI dự đoán:**
    - Lưu lượng giao thông từ dữ liệu lịch sử và thời gian thực
-   - Rủi ro môi trường (flooding) dựa trên dữ liệu thời tiết + cảm biến IoT
-3. **Hỗ trợ mô phỏng what-if:** Cho phép chính quyền thử nghiệm các kịch bản (mở đường mới, thay đổi luồng giao thông, xây khu đô thị) trước khi triển khai thực tế
+   - Rủi ro môi trường dựa trên dữ liệu thời tiết + cảm biến IoT
+3. **Hỗ trợ mô phỏng :** Cho phép chính quyền thử nghiệm các kịch bản (mở đường mới, thay đổi luồng giao thông, xây khu đô thị) trước khi triển khai thực tế
 4. **Dashboard hỗ trợ ra quyết định:** Cung cấp giao diện trực quan cho chính quyền và người dân
 
 ### Mục tiêu Dài hạn
 
-- Tích hợp vào hệ thống quản lý đô thị hiện có
-- Mở rộng sang năng lượng, môi trường, giao thông công cộng
-- Hỗ trợ **Chiến lược Quốc gia về Cách mạng Công nghiệp 4.0** của Việt Nam
-
+- Tích hợp sâu rộng vào hệ thống quản lý đô thị hiện có của các thành phố lớn, trở thành nền tảng cốt lõi hỗ trợ vận hành và ra quyết định thông minh theo thời gian thực.
+- Mở rộng phạm vi ứng dụng sang nhiều lĩnh vực then chốt của đô thị thông minh, bao gồm: quản lý năng lượng, giám sát và bảo vệ môi trường, tối ưu hóa giao thông công cộng, quy hoạch đô thị và các dịch vụ công cộng khác.
 ---
 
 ## 💡 Giải pháp – CivicTwin AI
 
-**CivicTwin AI** là câu trả lời. Đây là một nền tảng toàn diện kết hợp **Digital Twin** với **AI**, hoạt động như một **"tấm gương sống kỹ thuật số"** của thành phố. Mỗi con đường, mỗi giao lộ, mỗi cảm biến được **đồng bộ hóa thời gian thực**. Thông qua việc mô phỏng "nhịp tim" của thành phố trong môi trường kỹ thuật số, chúng ta chuyển từ **giám sát dữ liệu** sang **dự đoán tác động** và **tối ưu hóa phản ứng** trước khi khủng hoảng escalate.
+**CivicTwin AI** là câu trả lời. Đây là một nền tảng toàn diện kết hợp **Digital Twin** với **AI**, hoạt động như một **"tấm gương sống kỹ thuật số"** của thành phố. Mỗi con đường, mỗi giao lộ, mỗi cảm biến được **đồng bộ hóa thời gian thực**. Thông qua việc mô phỏng "nhịp tim" của thành phố trong môi trường kỹ thuật số, chúng ta chuyển từ **giám sát dữ liệu** sang **dự đoán tác động** và **tối ưu hóa phản ứng**.
 
 ---
 
@@ -95,6 +113,8 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 <!-- ## 🏗️ Kiến trúc & Công nghệ -->
 
 ## 📊 Các Đối tượng hướng đến
+![s](/static/img/doituong.png)
+
 
 ### 👨‍💼 1. Nhà quy hoạch & Quan chức chính quyền
 
@@ -122,6 +142,9 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 
 ## 🚀 Chức năng Chính của CivicTwin AI
 
+![s](/static/img/chucnang.png)
+
+
 ### 1. **Real-time Digital Twin**
 
 - Mô hình hóa toàn bộ đô thị dưới dạng đồ thị mạng
@@ -148,13 +171,13 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 
 ## 📚 Công nghệ Sử dụng
 
-| Thành phần        | Công nghệ                                 |
-| ----------------- | ----------------------------------------- |
-| **Frontend**      | Vite + vanilla JS + HTML5, Leaflet/Mapbox |
-| **Backend**       | Node.js + Express.js                      |
-| **AI Core**       | Amazon Bedrock + Amazon Nova              |
-| **Visualization** | Charts.js, Leaflet/Mapbox                 |
-| **Database**      | PostgreSQL + PostGIS                      |
+| Thành phần | Công nghệ cụ thể | Vai trò trong hệ thống |
+|------------|-----------------|------------------------|
+| **Giao diện (Frontend)** | `Leaflet.js` | Hiển thị bản đồ tương tác, vẽ các lớp phủ dữ liệu như vùng ngập, luồng giao thông và các thực thể Digital Twin. |
+| **Xử lý Logic (Backend)** | `Node.js (Express)` | Đóng vai trò trung tâm điều phối API, quản lý phiên làm việc của người dùng và thực hiện các kết nối tới cơ sở dữ liệu. |
+| **Trí tuệ nhân tạo (AI)** | `Amazon Bedrock` | Cung cấp hạ tầng để chạy các mô hình ngôn ngữ lớn  và mô hình dự báo, hỗ trợ phân tích kịch bản và tối ưu hóa tài nguyên đô thị. |
+| **Dữ liệu nền (Database)** | `PostgreSQL + PostGIS` | Lưu trữ và xử lý các dữ liệu không gian phức tạp, thực hiện các phép toán hình học như kiểm tra giao cắt , tạo vùng đệm và tính khoảng cách. |
+| **Kết nối (Real-time)** | `WebSockets` | Duy trì kết nối hai chiều liên tục, đảm bảo dữ liệu từ cảm biến IoT được cập nhật lên bản đồ theo thời gian thực. |
 
 ---
 
@@ -162,8 +185,8 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 
 | Tiêu chí           | ❌ Các Hệ thống Hiện tại                                  | ✅ CivicTwin                                                         |
 | ------------------ | --------------------------------------------------------- | -------------------------------------------------------------------- |
-| Cách tiếp cận      | Chỉ giám sát (monitoring) – dữ liệu quá khứ & hiện tại    | Giám sát + Dự đoán – từ dữ liệu quá khứ & hiện tại → tương lai       |
-| Phản ứng           | Thụ động (reactive) – chỉ hành động sau sự cố             | Chủ động (proactive) – dự báo và ngăn chặn trước khi xảy ra          |
+| Cách tiếp cận      | Chỉ giám sát – dữ liệu quá khứ & hiện tại    | Giám sát + Dự đoán – từ dữ liệu quá khứ & hiện tại → tương lai       |
+| Phản ứng           | Thụ động – chỉ hành động sau sự cố             | Chủ động– dự báo và ngăn chặn trước khi xảy ra          |
 | Khả năng dự báo    | Thiếu dự báo – không biết tương lai                       | Có dự báo – hỗ trợ ra quyết định sớm                                 |
 | Phân tích kịch bản | Không có hoặc rất hạn chế                                 | Mô phỏng what-if – thử trước, trực quan kết quả                      |
 | Rủi ro & chi phí   | Rủi ro cao – lãng phí ngân sách, tác động không mong muốn | Giảm rủi ro – tối ưu chi phí và hiệu quả                             |
