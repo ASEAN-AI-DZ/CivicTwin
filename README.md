@@ -1,4 +1,4 @@
-﻿# �️ CivicTwin AI — Digital Twin & AI Platform cho Quản lý Đô thị Thông minh
+﻿# 🏙️ CivicTwin AI — Digital Twin & AI Platform cho Quản lý Đô thị Thông minh
 
 
 <div align="center">
