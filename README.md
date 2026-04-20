@@ -211,7 +211,7 @@ Dự án không chỉ giải quyết vấn đề giao thông hôm nay mà còn g
 ### Liên hệ Dự án
 
 - **Lead Researcher:** [Contact Information]
-- **GitHub Repository:** [Repository Link]
+- **GitHub Repository:** https://github.com/ASEAN-AI-DZ/CivicTwin
 - **Documentation:** [Docs Link]
 
 ### Cách Đóng góp
