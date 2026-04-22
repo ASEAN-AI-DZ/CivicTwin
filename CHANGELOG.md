@@ -1,9 +1,15 @@
 # [](https://github.com/ASEAN-AI-DZ/CivicTwin/compare/v1.0.0...v) (2026-04-22)
 
 
+### Bug Fixes
+
+* update gitignore ([3dd6bf3](https://github.com/ASEAN-AI-DZ/CivicTwin/commit/3dd6bf321145a04eb742f934af274a6364a73dd3))
+
+
 ### Features
 
 * add realease workflow ([2293b64](https://github.com/ASEAN-AI-DZ/CivicTwin/commit/2293b647fb0f6690c8fac52d47432317761e945e))
+* build app ([a2c8df8](https://github.com/ASEAN-AI-DZ/CivicTwin/commit/a2c8df88f2b7791fe71b1d7af0a4b73c854a9bf1))
 
 # [1.0.0](https://github.com/ASEAN-AI-DZ/CivicTwin/compare/91f8f3d9d0f63ff316a9880927ab09c8bb75c730...v1.0.0) (2026-04-22)
 
