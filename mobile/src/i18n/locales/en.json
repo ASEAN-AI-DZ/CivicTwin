@@ -267,6 +267,12 @@
     "viewOnlyDesc": "You only have view-only access to this incident.",
     "aiRecommendations": "AI Recommendations",
     "aiPredictions": "AI Predictions",
+    "aiAnalysis": "CivicTwin AI Analysis",
+    "edgesAnalyzed": "Edges Analyzed",
+    "maxDensity": "Max Density",
+    "avgConfidence": "Avg Confidence",
+    "processingIn": "Processed in {{ms}}ms",
+    "approvedRecommendations": "Approved Recommendations",
     "timelineUppercase": "TIMELINE",
     "metadataUppercase": "METADATA",
     "event": {
@@ -327,6 +333,11 @@
     "views": "views",
     "reportIncident": "Report Incident",
     "submit": "Submit",
+    "justNow": "Just now",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "user": "User",
+    "other": "Other",
     "draftRestored": "Draft restored from your previous session",
     "discardDraft": "Discard",
     "draftDiscarded": "Draft discarded",
@@ -359,6 +370,7 @@
     "tapToOpenMap": "Tap to open map",
     "coordinates": "Coordinates",
     "severityRatingHint": "Rate the severity of the issue",
+    "citizenReport": "CITIZEN REPORT",
     "submitError": "Cannot create report. Please try again.",
     "locationPermission": "Location Permission",
     "locationPermissionDesc": "Location permission is needed to place the pin where you are standing.",
@@ -428,7 +440,22 @@
     "cannotEdit": "Cannot edit",
     "editReport": "Edit Report",
     "updateReport": "Update",
-    "loadingDetail": "Loading details..."
+    "loadingDetail": "Loading details...",
+    "filters": {
+      "title": "Filters",
+      "allCategories": "All categories",
+      "allStatuses": "All statuses",
+      "allPriorities": "All priorities",
+      "sortBy": "Sort by",
+      "sortByDate": "Date created",
+      "sortByVotes": "Votes",
+      "sortByViews": "Views",
+      "sortByRecent": "Recently updated",
+      "descending": "Descending",
+      "ascending": "Ascending",
+      "reset": "Reset",
+      "apply": "Apply"
+    }
   },
   "emergency": {
     "title": "Incidents & Dispatch",
@@ -589,10 +616,37 @@
     "notificationsWillAppear": "When there are report updates or related incidents, you will see them here.",
     "seeReport": "See Report",
     "systemNotifications": "Notifications from CivicTwin system and your report updates.",
+    "titles": {
+      "pointsIncreased": "Reliability Points Increased",
+      "pointsDecreased": "Reliability Points Decreased",
+      "newIncident": "New Incident",
+      "incidentWithSeverity": "{{severity}} Incident",
+      "newNotification": "New Notification"
+    },
+    "messages": {
+      "reportStatus": {
+        "received": "\"{{title}}\" has been received",
+        "verified": "\"{{title}}\" is being verified",
+        "processing": "\"{{title}}\" is being processed",
+        "completed": "\"{{title}}\" has been completed",
+        "rejected": "\"{{title}}\" has been rejected",
+        "updated": "\"{{title}}\" status has been updated"
+      },
+      "pointsUpdate": "{{change}} points ({{reason}}). Total: {{balance}} points",
+      "defaultIncident": "New incident in the area",
+      "defaultTrafficIncident": "New traffic incident"
+    },
     "recommendations": {
       "trafficAdjustment": "Adjust regional traffic light cycles. Divert vehicles to parallel secondary axes.",
       "accidentResponse": "Coordinate police + medical. Temporary traffic diversion at the 2 nearest intersections.",
-      "defaultResponse": "Verify scene and activate appropriate response team."
+      "defaultResponse": "Verify scene and activate appropriate response team.",
+      "reroute": "Rerouting recommended — congestion spreading to :count segments.",
+      "priority_route": "Activate priority rescue route — avoid :count affected road segments.",
+      "alert": "Alert issued — check details for affected areas.",
+      "emergency_alert": "Emergency alert issued for residents in affected area.",
+      "congestion_alert": "Congestion warning — consider alternative routes.",
+      "advisory": "Traffic advisory — possible congestion in the next 15-60 minutes.",
+      "signal_change": "Adjust traffic signal timing at affected intersections."
     },
     "settingsTitle": "Notification Settings",
     "comingSoon": "Notification settings feature is under development"
