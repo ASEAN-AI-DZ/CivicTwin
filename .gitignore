@@ -49,3 +49,5 @@ mobile/android/app/build/
 mobile/ios/Pods/
 mobile/ios/build/
 firebase-service-account.json
+
+ISSUELOG.md
