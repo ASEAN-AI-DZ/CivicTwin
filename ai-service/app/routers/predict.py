@@ -62,6 +62,7 @@ class PredictRequest(BaseModel):
     incident_id: int
     severity: str
     affected_edge_ids: list[int]
+    locale: str = "vi"
 
 
 class EdgePrediction(BaseModel):
@@ -205,7 +206,7 @@ async def predict_traffic(request: PredictRequest):
     ]
 
     # ── 5) Recommendations ──
-    recommendations = _build_recommendations(request.severity, all_predictions, model_type)
+    recommendations = _build_recommendations(request.severity, all_predictions, model_type, request.locale)
 
     process_time = int((time.time() - start_time) * 1000)
 
@@ -246,6 +247,17 @@ async def simulate_traffic(request: SimulateRequest):
     }
 
 
+def _to_serializable(obj):
+    """Recursively convert numpy/torch types to Python native for JSON serialization."""
+    if isinstance(obj, dict):
+        return {k: _to_serializable(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_to_serializable(v) for v in obj]
+    if hasattr(obj, 'item'):  # numpy scalar or torch tensor scalar
+        return obj.item()
+    return obj
+
+
 @router.get("/model-info")
 async def get_model_info():
     """
@@ -263,8 +275,8 @@ async def get_model_info():
         "architecture": model_service.model_info.get("architecture", ""),
         "model_type": model_service.model_type,
         "status": "active",
-        "metrics": model_service.metrics,
-        "config": model_service.config,
+        "metrics": _to_serializable(model_service.metrics),
+        "config": _to_serializable(model_service.config),
         "input_window": model_service.model_info.get("input_window", ""),
         "output_window": model_service.model_info.get("output_window", ""),
         "framework": model_service.model_info.get("framework", "PyTorch"),
@@ -275,42 +287,64 @@ async def get_model_info():
 # ─── Helpers ────────────────────────────────────────────────────────────────
 
 
-def _build_recommendations(severity: str, predictions: list, model_type: str) -> list:
-    """Generate traffic management recommendations based on prediction severity."""
+def _build_recommendations(severity: str, predictions: list, model_type: str, locale: str = "vi") -> list:
+    """Generate traffic management recommendations based on prediction severity.
+    
+    Args:
+        severity: Incident severity level (low, medium, high, critical)
+        predictions: List of prediction objects with severity info
+        model_type: AI model type (stgcn, lstm, etc.)
+        locale: Response locale ('en' or 'vi')
+    """
     critical_count = sum(1 for p in predictions if p.get("severity") == "critical")
     high_count = sum(1 for p in predictions if p.get("severity") == "high")
 
     recs = []
 
-    if severity in ["high", "critical"] and (critical_count + high_count) > 0:
+    total_affected = critical_count + high_count
+
+    # Multilingual text templates
+    texts = {
+        "en": {
+            "reroute": "Rerouting recommended — {model} predicts congestion spreading to {count} segments.",
+            "signal": "Adjust green light phase by +15s at intersections to clear vehicle queues ({critical} critical, {high} high segments).",
+            "priority": "Activate priority rescue route — avoid affected road segments.",
+            "advisory": "Congestion warning — consider alternative routes. {model} predicts density increase in the next 30 minutes.",
+        },
+        "vi": {
+            "reroute": "Đề xuất chuyển hướng — {model} dự báo tắc nghẽn lan rộng {count} đoạn.",
+            "signal": "Điều chỉnh pha đèn xanh +15s tại các nút giao để giải tỏa hàng chờ ({critical} đoạn nghiêm trọng, {high} đoạn cao).",
+            "priority": "Kích hoạt tuyến ưu tiên cứu hộ — tránh các đoạn đường bị ảnh hưởng.",
+            "advisory": "Cảnh báo ùn tắc — khuyến cáo chọn đường khác. {model} dự báo mật độ tăng trong 30 phút tới.",
+        }
+    }
+    
+    t = texts.get(locale, texts["vi"])
+    model_label = model_type.upper()
+
+    if severity in ["high", "critical"] and total_affected > 0:
         recs.append(Recommendation(
             type="reroute",
-            description=(
-                f"ST-GCN predicted {critical_count + high_count} affected segments. "
-                "Recommend rerouting traffic via parallel arterial roads."
-            ),
+            description=t["reroute"].format(model=model_label, count=total_affected),
             alternative_edges=[],
             estimated_time_saved_seconds=300,
         ))
         recs.append(Recommendation(
             type="signal_change",
-            description="Increase green phase by 15s at key intersections to reduce queue overflow.",
+            description=t["signal"].format(critical=critical_count, high=high_count),
             alternative_edges=[],
             estimated_time_saved_seconds=120,
         ))
         recs.append(Recommendation(
             type="alternative_route",
-            description=(
-                f"Activate emergency vehicle priority routing for ambulance/fire trucks. "
-                f"Model: {model_type.upper()} — captures spatial spread of congestion."
-            ),
+            description=t["priority"],
             alternative_edges=[],
             estimated_time_saved_seconds=240,
         ))
     elif severity == "medium":
         recs.append(Recommendation(
             type="advisory",
-            description="Moderate congestion predicted. Advisory warning to commuters recommended.",
+            description=t["advisory"].format(model=model_label),
             alternative_edges=[],
             estimated_time_saved_seconds=0,
         ))
