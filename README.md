@@ -60,39 +60,6 @@ Trong bối cảnh đô thị hóa diễn ra nhanh chóng tại các thành ph�
 - Mở rộng phạm vi ứng dụng sang nhiều lĩnh vực then chốt của đô thị thông minh, bao gồm: quản lý năng lượng, giám sát và bảo vệ môi trường, tối ưu hóa giao thông công cộng, quy hoạch đô thị và các dịch vụ công cộng khác.
 ---
 
-## 💡 Giải pháp – CivicTwin AI
-
-**CivicTwin AI** là câu trả lời. Đây là một nền tảng toàn diện kết hợp **Digital Twin** với **AI**, hoạt động như một **"tấm gương sống kỹ thuật số"** của thành phố. Mỗi con đường, mỗi giao lộ, mỗi cảm biến được **đồng bộ hóa thời gian thực**. Thông qua việc mô phỏng "nhịp tim" của thành phố trong môi trường kỹ thuật số, chúng ta chuyển từ **giám sát dữ liệu** sang **dự đoán tác động** và **tối ưu hóa phản ứng**.
-
----
-
-## 🔬 Digital Twin là gì?
-
-### Định nghĩa
-
-**Digital Twin (Bản sao số)** là khái niệm cốt lõi trong khoa học công nghệ hiện đại, đặc biệt trong Cách mạng Công nghiệp 4.0. Đây là **bản sao kỹ thuật số (virtual replica)** của một thực thể vật lý – có thể là một máy móc, quy trình sản xuất, tòa nhà, xe hơi, bệnh viện, hoặc thậm chí cả một thành phố/hệ thống hạ tầng lớn.
-
-**Digital Twin KHÔNG PHẢI:**
-
-- ❌ Hình ảnh tĩnh hay mô hình 3D đơn giản
-- ❌ Bản chụp giống như một bức ảnh
-
-**Digital Twin là:**
-
-- ✅ Một **hệ thống động**, được cập nhật liên tục dữ liệu thời gian thực
-- ✅ Tích hợp dữ liệu từ: cảm biến, IoT, camera, dữ liệu vệ tinh,…
-- ✅ **Phản ánh chính xác** tình trạng của "bản gốc"
-- ✅ **Hai chiều:** dữ liệu thực → cập nhật digital twin; quyết định digital twin → áp dụng lại thực tế
-
-### Khả năng của Digital Twin
-
-1. **Mô phỏng:** Thử nghiệm các kịch bản mà không cần thay đổi thực tế
-2. **Dự đoán:** Dự báo sự cố, hỏng hóc, hiệu suất tương lai
-3. **Tối ưu hóa:** Tìm ra cách vận hành tốt nhất, tiết kiệm chi phí, giảm rủi ro
-4. **Phân tích hai chiều:** Dữ liệu thực ↔ Digital Twin → ra quyết định chuẩn xác
-
----
-
 ## 🌐 CivicTwin AI là gì?
 
 ### Khái niệm
@@ -181,18 +148,6 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 
 ---
 
-## 🌟 So Sánh CivicTwin AI Với Các Hệ Thống Hiện Tại
-
-| Tiêu chí           | ❌ Các Hệ thống Hiện tại                                  | ✅ CivicTwin                                                         |
-| ------------------ | --------------------------------------------------------- | -------------------------------------------------------------------- |
-| Cách tiếp cận      | Chỉ giám sát – dữ liệu quá khứ & hiện tại    | Giám sát + Dự đoán – từ dữ liệu quá khứ & hiện tại → tương lai       |
-| Phản ứng           | Thụ động – chỉ hành động sau sự cố             | Chủ động– dự báo và ngăn chặn trước khi xảy ra          |
-| Khả năng dự báo    | Thiếu dự báo – không biết tương lai                       | Có dự báo – hỗ trợ ra quyết định sớm                                 |
-| Phân tích kịch bản | Không có hoặc rất hạn chế                                 | Mô phỏng what-if – thử trước, trực quan kết quả                      |
-| Rủi ro & chi phí   | Rủi ro cao – lãng phí ngân sách, tác động không mong muốn | Giảm rủi ro – tối ưu chi phí và hiệu quả                             |
-| Tính minh bạch     | Thấp, khó kiểm chứng                                      | Minh bạch + Xác thực – AI giải thích, dữ liệu mở, cộng đồng tham gia |
-
----
 
 ## 🎯 Kết Luận
 
@@ -212,7 +167,7 @@ Dự án không chỉ giải quyết vấn đề giao thông hôm nay mà còn g
 
 - **Lead Researcher:** [Contact Information]
 - **GitHub Repository:** https://github.com/ASEAN-AI-DZ/CivicTwin
-- **Documentation:** [Docs Link]
+- **Documentation:** [[Documentation](https://asean-ai-dz.github.io/CivicTwinDocument/en/intro/)]
 
 ### Cách Đóng góp
 
