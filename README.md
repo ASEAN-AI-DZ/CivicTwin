@@ -5,9 +5,9 @@
   <a href="https://civic-twin-ai-six.vercel.app/">
     <img src="https://img.shields.io/badge/🚀_Website-CivicTwin-00C853?style=for-the-badge" alt="Demo System"/>
   </a>
-  <!-- <a href="https://nguyenthai11103.github.io/DTU-CivicTwin-documents/intro">
+  <a href="https://asean-ai-dz.github.io/CivicTwinDocument/en/intro/">
     <img src="https://img.shields.io/badge/📚_Documentation-CivicTwin-1976D2?style=for-the-badge" alt="Documentation"/>
-  </a> -->
+  </a>
   <br/>
   
   <a href="LICENSE">
