@@ -148,6 +148,22 @@ Khi một sự cố xảy ra, hệ thống không chỉ hiển thị tình hình
 
 ---
 
+## ⚙️ Hướng dẫn Cài đặt Cơ bản
+
+1. **Clone repository:**
+   ```bash
+   git clone https://github.com/ASEAN-AI-DZ/CivicTwin.git
+   cd CivicTwin
+   ```
+
+2. **Khởi chạy nền tảng bằng Docker Compose:**
+   ```bash
+   docker compose up -d --build
+   ```
+
+> Xem thêm mục [Hướng dẫn Thiết lập Chi tiết](docs/setup.md) nếu bạn muốn chạy ở môi trường Local Development hoặc cấu hình chuyên sâu.
+
+---
 
 ## 🎯 Kết Luận
 
