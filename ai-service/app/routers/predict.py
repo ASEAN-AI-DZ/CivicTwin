@@ -90,11 +90,7 @@ class PredictResponse(BaseModel):
     processing_time_ms: int
 
 
-class SimulateRequest(BaseModel):
-    location_area: str
-    severity: str
-    incident_type: str
-    prediction_horizon: int = Field(30, ge=5, le=120)
+
 
 
 # ─── Endpoints ────────────────────────────────────────────────────────────────
@@ -220,31 +216,7 @@ async def predict_traffic(request: PredictRequest):
     )
 
 
-@router.post("/simulate")
-async def simulate_traffic(request: SimulateRequest):
-    """
-    What-if scenario simulation using BFS cascade.
-    Used by Urban Planners for long-term road planning.
-    """
-    start_time = time.time()
 
-    if not graph_service.is_loaded:
-        await graph_service.load_graph()
-
-    result = graph_service.simulate_scenario(
-        location_area=request.location_area,
-        severity=request.severity,
-        incident_type=request.incident_type,
-        prediction_horizon=request.prediction_horizon,
-    )
-
-    process_time = int((time.time() - start_time) * 1000)
-
-    return {
-        "simulation": result,
-        "processing_time_ms": process_time,
-        "note": "BFS heuristic simulation — ST-GCN planned for long-horizon (Amazon Nova Layer 3)",
-    }
 
 
 def _to_serializable(obj):

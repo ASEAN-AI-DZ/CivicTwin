@@ -8,14 +8,14 @@ from app.services.model_service import model_service
 
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("🚀 Nạp kết nối CSDL PostGIS...")
+    print("[AI Service] Connecting to PostGIS Database...")
     await connect_db()
-    print("🌍 Nạp dữ liệu Map Graph cho AI-Service...")
+    print("[AI Service] Loading Map Graph Data...")
     await graph_service.load_graph()
-    print("🧠 Nạp LSTM Model AI...")
+    print("[AI Service] Loading LSTM Model...")
     model_service.load_model()
     yield
-    print("🛑 Đóng kết nối CSDL PostGIS...")
+    print("[AI Service] Closing PostGIS Database connection...")
     await disconnect_db()
 
 app = FastAPI(

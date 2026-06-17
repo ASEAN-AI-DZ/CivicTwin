@@ -191,7 +191,7 @@ export default function AdminPage() {
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium">{log.description}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="text-[11px] text-muted-foreground font-medium flex items-center gap-1">
+                      <p className="text-[11px] text-muted-foreground font-medium flex items-center gap-1" suppressHydrationWarning>
                         <Clock className="w-3 h-3" /> {new Date(log.created_at).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US')}
                       </p>
                       {log.causer && (

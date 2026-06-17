@@ -17,12 +17,15 @@ const SeverityPieChart = dynamic(() => import('@/components/AnalyticsCharts').th
 const DensityHistogram = dynamic(() => import('@/components/AnalyticsCharts').then(m => m.DensityHistogram), { ssr: false, loading: () => <ChartSkeleton /> });
 const TypeBarChart = dynamic(() => import('@/components/AnalyticsCharts').then(m => m.TypeBarChart), { ssr: false, loading: () => <ChartSkeleton /> });
 
+// Stable heights to avoid hydration mismatch (no Math.random in render)
+const SKELETON_HEIGHTS = [45, 72, 58, 83, 41, 67, 55, 79];
+
 function ChartSkeleton() {
   return (
     <div className="h-[240px] w-full p-4 space-y-3">
       <div className="flex items-end gap-2 h-full">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="flex-1 bg-muted animate-pulse rounded-t" style={{ height: `${30 + Math.random() * 60}%`, animationDelay: `${i * 100}ms` }} />
+        {SKELETON_HEIGHTS.map((height, i) => (
+          <div key={i} className="flex-1 bg-muted animate-pulse rounded-t" style={{ height: `${height}%`, animationDelay: `${i * 100}ms` }} />
         ))}
       </div>
       <div className="flex justify-between">

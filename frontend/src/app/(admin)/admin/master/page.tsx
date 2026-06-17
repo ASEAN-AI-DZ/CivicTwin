@@ -317,10 +317,10 @@ export default function MasterDataPage() {
                               {st.icon} {t(`master.sensorStatus.${sensor.status}`)}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-xs text-muted-foreground">
+                          <TableCell className="text-xs text-muted-foreground" suppressHydrationWarning>
                             {sensor.last_active_at ? new Date(sensor.last_active_at).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—'}
                           </TableCell>
-                          <TableCell className="text-xs text-muted-foreground">
+                          <TableCell className="text-xs text-muted-foreground" suppressHydrationWarning>
                             {sensor.installed_at ? new Date(sensor.installed_at).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US') : '—'}
                           </TableCell>
                         </TableRow>

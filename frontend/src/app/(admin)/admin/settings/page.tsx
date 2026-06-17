@@ -62,8 +62,15 @@ export default function SettingsPage() {
               <Select defaultValue="vi">
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="vi">{t('settings.vietnamese')}</SelectItem>
-                  <SelectItem value="en">{t('settings.english')}</SelectItem>
+                  <SelectItem value="vi">Tiếng Việt</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="th">ไทย (Thai)</SelectItem>
+                  <SelectItem value="id">Indonesia</SelectItem>
+                  <SelectItem value="ms">Melayu</SelectItem>
+                  <SelectItem value="tl">Filipino</SelectItem>
+                  <SelectItem value="km">Khmer</SelectItem>
+                  <SelectItem value="lo">Lào (Lao)</SelectItem>
+                  <SelectItem value="my">Burmese</SelectItem>
                 </SelectContent>
               </Select>
             </div>

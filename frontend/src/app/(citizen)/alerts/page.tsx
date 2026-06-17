@@ -205,7 +205,7 @@ export default function AlertsPage() {
                       <MapPin className="w-3.5 h-3.5 text-blue-500" />
                       {alert.area}
                     </span>
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5" suppressHydrationWarning>
                       <Clock className="w-3.5 h-3.5" />
                       {new Date(alert.created_at).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', {
                         hour: "2-digit",

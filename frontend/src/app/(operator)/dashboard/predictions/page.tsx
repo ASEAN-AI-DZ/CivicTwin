@@ -340,7 +340,7 @@ export default function PredictionsPage() {
                         <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{pred.processing_time_ms || 0}ms</span>
                         {roadCount > 0 && (<><span>·</span><span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{roadCount} tuyến đường</span></>)}
                         <span>·</span>
-                        <span className="text-muted-foreground/60">
+                        <span className="text-muted-foreground/60" suppressHydrationWarning>
                           {new Date(pred.created_at).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' })}
                         </span>
                       </div>
