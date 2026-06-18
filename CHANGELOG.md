@@ -1,4 +1,4 @@
-# [](https://github.com/ASEAN-AI-DZ/CivicTwin/compare/v1.0.0...v) (2026-05-22)
+# [](https://github.com/ASEAN-AI-DZ/CivicTwin/compare/v1.0.0...v) (2026-06-18)
 
 
 ### Bug Fixes
