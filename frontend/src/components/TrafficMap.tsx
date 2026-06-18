@@ -35,6 +35,13 @@ interface TrafficMapProps {
 export default function TrafficMap({ isPublic = false, hideOverlays = false, onMapClick, highlightedEdgeIds = [], focusIncidentId }: TrafficMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const geoJsonPromiseRef = useRef<Promise<any> | null>(null);
+
+  // Pre-fetch edges immediately on mount to eliminate the waterfall
+  useEffect(() => {
+    const endpoint = isPublic ? '/public/edges/geojson' : '/edges/geojson';
+    geoJsonPromiseRef.current = api.get(endpoint).then(res => res.data);
+  }, [isPublic]);
   const { theme, resolvedTheme } = useTheme();
   const { t, locale } = useTranslation();
 
@@ -391,11 +398,13 @@ export default function TrafficMap({ isPublic = false, hideOverlays = false, onM
       : 'mapbox://styles/mapbox/streets-v12';
   };
 
-  const loadGeoJSON = async () => {
+  const loadGeoJSON = async (forceFresh = false) => {
     try {
       const endpoint = isPublic ? '/public/edges/geojson' : '/edges/geojson';
-      const res = await api.get(endpoint);
-      const data = res.data;
+      if (forceFresh || !geoJsonPromiseRef.current) {
+        geoJsonPromiseRef.current = api.get(endpoint).then(res => res.data);
+      }
+      const data = await geoJsonPromiseRef.current;
       geojsonDataRef.current = data; // Cache for real-time mutation
 
       setTotalEdges(data.features.length);
@@ -817,7 +826,7 @@ export default function TrafficMap({ isPublic = false, hideOverlays = false, onM
         </div>
 
         <button
-          onClick={() => { setLoading(true); loadGeoJSON(); }}
+          onClick={() => { setLoading(true); loadGeoJSON(true); }}
           disabled={loading}
           className="p-4 rounded-2xl bg-card/90 backdrop-blur-xl border border-border shadow-lg hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring transition-all disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer text-muted-foreground hover:text-foreground pointer-events-auto"
           title={t('trafficMap.refreshData')}
