@@ -131,7 +131,7 @@ export default function LogsPage() {
                               <Database className="w-3 h-3" /> {log.subject_type.split('\\').pop()} #{log.subject_id}
                             </span>
                           )}
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1" suppressHydrationWarning>
                             <Clock className="w-3 h-3" /> {new Date(log.created_at).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US')}
                           </span>
                         </div>

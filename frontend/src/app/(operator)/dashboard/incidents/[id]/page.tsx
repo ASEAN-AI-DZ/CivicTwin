@@ -314,7 +314,7 @@ export default function IncidentDetailPage() {
                 <span className={stat.color}>{stat.icon}</span>
                 <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{stat.label}</span>
               </div>
-              <p className="text-sm font-semibold truncate">{stat.value}</p>
+              <p className="text-sm font-semibold truncate" suppressHydrationWarning>{stat.value}</p>
             </CardContent>
           </Card>
         ))}
@@ -468,7 +468,7 @@ export default function IncidentDetailPage() {
                     </div>
                     <div className="flex-1 min-w-0 pt-0.5">
                       <p className={`text-sm font-medium ${step.active ? '' : 'text-muted-foreground'}`}>{step.label}</p>
-                      {step.time && <p className="text-[11px] text-muted-foreground mt-0.5">{formatDate(step.time, locale)}</p>}
+                       {step.time && <p className="text-[11px] text-muted-foreground mt-0.5" suppressHydrationWarning>{formatDate(step.time, locale)}</p>}
                     </div>
                   </div>
                 ))}

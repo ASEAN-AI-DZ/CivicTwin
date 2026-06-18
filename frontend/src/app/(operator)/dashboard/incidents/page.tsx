@@ -260,7 +260,7 @@ export default function IncidentsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-xs font-medium text-muted-foreground">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2" suppressHydrationWarning>
                         <Clock className="w-3.5 h-3.5" />
                         {new Date(inc.created_at).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', {
                           day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'

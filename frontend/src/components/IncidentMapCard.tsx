@@ -16,6 +16,12 @@ interface Props {
 export default function IncidentMapCard({ lat, lng, highlightedEdgeIds }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
+  const edgesPromiseRef = useRef<Promise<any> | null>(null);
+
+  // Pre-fetch edges immediately on mount to eliminate the waterfall
+  useEffect(() => {
+    edgesPromiseRef.current = api.get('/edges/geojson').then(res => res.data?.data ?? res.data);
+  }, []);
   const { resolvedTheme } = useTheme();
   const [mapLoading, setMapLoading] = useState(true);
   const highlightedSetRef = useRef(new Set<number>(highlightedEdgeIds));
@@ -125,8 +131,13 @@ export default function IncidentMapCard({ lat, lng, highlightedEdgeIds }: Props)
 
     const loadEdges = async () => {
       try {
-        const res = await api.get('/edges/geojson');
-        const geojson = res.data?.data ?? res.data;
+        let geojson;
+        if (edgesPromiseRef.current) {
+          geojson = await edgesPromiseRef.current;
+        } else {
+          const res = await api.get('/edges/geojson');
+          geojson = res.data?.data ?? res.data;
+        }
 
         if (cancelled || !mapInstanceRef.current) return;
 

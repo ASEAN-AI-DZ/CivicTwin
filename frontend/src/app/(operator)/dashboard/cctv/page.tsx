@@ -28,6 +28,7 @@ export default function CCTVPage() {
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<number | null>(null);
   const [search, setSearch] = useState('');
+  const [clockTime, setClockTime] = useState<string>('');
 
   const fetchSensors = async () => {
     setLoading(true);
@@ -45,6 +46,14 @@ export default function CCTVPage() {
   };
 
   useEffect(() => { fetchSensors(); }, []);
+
+  // Live clock — client-only to avoid hydration mismatch
+  useEffect(() => {
+    const fmt = () => new Date().toLocaleTimeString(locale === 'vi' ? 'vi-VN' : 'en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    setClockTime(fmt());
+    const id = setInterval(() => setClockTime(fmt()), 1000);
+    return () => clearInterval(id);
+  }, [locale]);
 
   const filtered = useMemo(() => {
     if (!search.trim()) return sensors;
@@ -130,7 +139,7 @@ export default function CCTVPage() {
                 </button>
               </div>
               <div className="absolute bottom-4 left-4 text-xs text-white/60 font-mono flex items-center gap-2">
-                <Clock className="w-3 h-3" /> {new Date().toLocaleTimeString(locale === 'vi' ? 'vi-VN' : 'en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                <Clock className="w-3 h-3" /> {clockTime}
               </div>
             </div>
           </CardContent>

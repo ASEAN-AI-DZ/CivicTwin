@@ -311,7 +311,7 @@ export default function RecommendationsPage() {
                     <TableCell className="pt-4">
                       <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                         <Clock className="w-3.5 h-3.5 shrink-0" />
-                        <span className="truncate">
+                        <span className="truncate" suppressHydrationWarning>
                           {new Date(rec.created_at).toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', {
                             day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
                           })}

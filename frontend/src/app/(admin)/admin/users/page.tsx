@@ -378,7 +378,7 @@ export default function UsersPage() {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-xs font-medium text-muted-foreground">
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5" suppressHydrationWarning>
                           <Clock className="w-3.5 h-3.5" /> {formatLogin(user.last_login_at)}
                         </div>
                       </TableCell>
