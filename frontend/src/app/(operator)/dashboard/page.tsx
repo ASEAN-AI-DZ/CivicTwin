@@ -246,7 +246,7 @@ export default function DashboardPage() {
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="dashboard-kpi-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {loading ? (
           <>{Array.from({ length: 4 }).map((_, i) => <KPICardSkeleton key={i} />)}</>
         ) : (
@@ -294,7 +294,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Traffic Map — Full Width with integrated legend */}
-      <Card className="card-lift bg-card/40 backdrop-blur-xl shadow-2xl overflow-hidden border-border/80">
+      <Card id="dashboard-traffic-map" className="card-lift bg-card/40 backdrop-blur-xl shadow-2xl overflow-hidden border-border/80">
         <CardHeader className="p-4 pb-0 flex flex-row items-center justify-between">
           <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
             <Activity className="w-4 h-4 text-blue-500" />
@@ -320,7 +320,7 @@ export default function DashboardPage() {
             <TrafficMap isPublic={true} highlightedEdgeIds={highlightedEdgeIds} focusIncidentId={focusIncidentId} />
           </div>
           {/* Integrated Flow Legend */}
-          <div className="flex flex-wrap items-center gap-4 pt-3 mt-3 border-t border-border/50">
+          <div id="dashboard-flow-legend" className="flex flex-wrap items-center gap-4 pt-3 mt-3 border-t border-border/50">
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4 text-muted-foreground" />
               <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t('trafficMap.flowIntensity')}</span>
@@ -352,7 +352,7 @@ export default function DashboardPage() {
       {/* Recent Incidents + AI Activity — Same Row */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Recent Incidents */}
-        <Card className="card-lift lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
+        <Card id="dashboard-incidents-panel" className="card-lift lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
           <CardHeader className="p-4 pb-3 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-orange-500" />
@@ -396,7 +396,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* AI Activity Feed */}
-        <Card className="card-lift lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
+        <Card id="dashboard-ai-feed" className="card-lift lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
           <CardHeader className="p-4 pb-3 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
               <Brain className="w-4 h-4 text-violet-500" />

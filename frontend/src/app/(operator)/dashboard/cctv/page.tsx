@@ -239,7 +239,7 @@ export default function CCTVPage() {
   return (
     <div className="w-full max-w-[1400px] mx-auto space-y-6 animate-in fade-in duration-500">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
+      <div id="cctv-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0 shadow-inner">
             <Camera className="w-6 h-6 text-cyan-500" />
@@ -267,7 +267,7 @@ export default function CCTVPage() {
       </div>
 
       {/* Search */}
-      <div className="relative max-w-sm">
+      <div id="cctv-search" className="relative max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
           placeholder={t('op.searchCamera')}
@@ -331,7 +331,7 @@ export default function CCTVPage() {
           <p className="text-sm text-muted-foreground">{t('op.noCamerasFound')}</p>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div id="cctv-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((cam) => {
             const isOnline = cam.status === 'active' || cam.status === 'online';
             const videoUrl = (cam.metadata as any)?.video_url;

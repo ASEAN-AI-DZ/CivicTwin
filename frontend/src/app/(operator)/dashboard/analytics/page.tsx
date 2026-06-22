@@ -136,7 +136,7 @@ export default function AnalyticsPage() {
   return (
     <div className="w-full max-w-7xl mx-auto space-y-6 animate-in fade-in duration-500 pb-8">
       {/* ─── Header ─── */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div id="analytics-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
             <BarChart3 className="w-6 h-6 text-indigo-500" />
@@ -153,7 +153,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* ─── KPI Cards ─── */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div id="analytics-kpi" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <KPICard icon={AlertOctagon} color="rose" label={t('op.totalIncidents')} value={kpis.total_incidents} sub={`${kpis.open_incidents} ${t('op.activeNow')}`} />
         <KPICard icon={ShieldCheck} color="emerald" label={t('op.resolutionRate')} value={`${kpis.resolution_rate}%`} sub={`${kpis.resolved_incidents}/${kpis.total_incidents}`} />
         <KPICard icon={Cpu} color="blue" label={t('op.aiSessions')} value={kpis.total_predictions} sub={`${kpis.completed_predictions} ${t('op.completedRuns')}`} />
@@ -163,7 +163,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* ─── Row 1: Timeline + Severity Pie ─── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div id="analytics-charts" className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2 bg-card/50 backdrop-blur-xl shadow-lg">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-bold">{t('op.incidentTimeline')}</CardTitle>
@@ -208,7 +208,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* ─── Row 3: Top Congested Roads ─── */}
-      <Card className="bg-card/50 backdrop-blur-xl shadow-lg">
+      <Card id="analytics-map" className="bg-card/50 backdrop-blur-xl shadow-lg">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
             <div>

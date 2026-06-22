@@ -15,6 +15,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { NotificationBell } from './NotificationBell';
+import { TourButton } from './TourButton';
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
@@ -26,14 +27,14 @@ export default function Sidebar() {
   const isAdmin = user?.roles?.some((r: string) => ['super_admin', 'city_admin'].includes(r));
 
   const navItems = [
-    { href: '/dashboard', icon: Map, labelKey: 'sidebar.trafficMap' },
-    { href: '/dashboard/incidents', icon: AlertTriangle, labelKey: 'sidebar.incidents' },
-    { href: '/dashboard/predictions', icon: Brain, labelKey: 'sidebar.predictions' },
-    { href: '/dashboard/simulation', icon: FlaskConical, labelKey: 'sidebar.simulation' },
-    { href: '/dashboard/recommendations', icon: Lightbulb, labelKey: 'sidebar.recommendations' },
-    { href: '/dashboard/cctv', icon: Camera, labelKey: 'sidebar.cctvMonitor' },
-    { href: '/dashboard/analytics', icon: BarChart3, labelKey: 'sidebar.analytics' },
-    ...(isAdmin ? [{ href: '/admin', icon: Settings2, labelKey: 'navbar.adminPanel' }] : []),
+    { href: '/dashboard', icon: Map, labelKey: 'sidebar.trafficMap', id: 'nav-traffic-map' },
+    { href: '/dashboard/incidents', icon: AlertTriangle, labelKey: 'sidebar.incidents', id: 'nav-incidents' },
+    { href: '/dashboard/predictions', icon: Brain, labelKey: 'sidebar.predictions', id: 'nav-predictions' },
+    { href: '/dashboard/simulation', icon: FlaskConical, labelKey: 'sidebar.simulation', id: 'nav-simulation' },
+    { href: '/dashboard/recommendations', icon: Lightbulb, labelKey: 'sidebar.recommendations', id: 'nav-recommendations' },
+    { href: '/dashboard/cctv', icon: Camera, labelKey: 'sidebar.cctvMonitor', id: 'nav-cctv' },
+    { href: '/dashboard/analytics', icon: BarChart3, labelKey: 'sidebar.analytics', id: 'nav-analytics' },
+    ...(isAdmin ? [{ href: '/admin', icon: Settings2, labelKey: 'navbar.adminPanel', id: 'nav-admin' }] : []),
   ];
 
   // Auto-collapse on mobile/tablet
@@ -84,6 +85,7 @@ export default function Sidebar() {
           const linkEl = (
             <Link
               key={item.href}
+              id={item.id}
               href={item.href}
               className={`flex items-center gap-3 px-3 min-h-[44px] rounded-xl transition-all duration-200 group cursor-pointer ${
                 isActive
@@ -106,7 +108,7 @@ export default function Sidebar() {
           if (collapsed) {
             return (
               <Tooltip key={item.href}>
-                <TooltipTrigger render={<Link href={item.href} />} className={`flex items-center gap-3 px-3 min-h-[44px] rounded-xl transition-all duration-200 group cursor-pointer ${
+                <TooltipTrigger id={item.id} render={<Link href={item.href} />} className={`flex items-center gap-3 px-3 min-h-[44px] rounded-xl transition-all duration-200 group cursor-pointer ${
                   isActive ? 'nav-active-bar bg-blue-500/8 border border-blue-500/15 text-primary font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground font-medium'
                 }`}>
                   <item.icon className={`w-5 h-5 shrink-0 transition-transform ${isActive ? 'scale-110 text-primary' : 'group-hover:scale-110 group-hover:translate-x-0.5'}`} />
@@ -121,6 +123,11 @@ export default function Sidebar() {
           return linkEl;
         })}
       </nav>
+
+      {/* Tour Button */}
+      <div className="px-3 pb-3">
+        <TourButton collapsed={collapsed} autoStart />
+      </div>
 
       {/* User Profile */}
       <div className="p-3 border-t border-border bg-muted/10">

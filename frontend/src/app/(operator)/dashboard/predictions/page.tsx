@@ -192,7 +192,7 @@ export default function PredictionsPage() {
     <div className="w-full max-w-5xl mx-auto space-y-6 pb-12 animate-in fade-in duration-500">
 
       {/* ── Header ── */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div id="predictions-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
             <Brain className="w-6 h-6 text-primary" />
@@ -216,7 +216,7 @@ export default function PredictionsPage() {
       </div>
 
       {/* ── KPI Row ── */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div id="predictions-stats" className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Card className="bg-card/60"><CardContent className="p-4">
           <div className="flex items-center gap-2 mb-1">
             <Brain className="w-4 h-4 text-blue-500" />
@@ -259,7 +259,7 @@ export default function PredictionsPage() {
       </div>
 
       {/* ── Model explainer banner ── */}
-      <div className="rounded-xl border border-purple-500/20 bg-purple-500/5 p-4 flex gap-3">
+      <div id="predictions-model-info" className="rounded-xl border border-purple-500/20 bg-purple-500/5 p-4 flex gap-3">
         <BarChart3 className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
         <div className="text-sm space-y-1">
           <p className="font-semibold text-purple-300">Tại sao dùng ST-GCN thay vì LSTM thông thường?</p>
@@ -286,7 +286,7 @@ export default function PredictionsPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-3">
+        <div id="predictions-list" className="space-y-3">
           {predictions.map(pred => {
             const isExpanded = expandedId === pred.id;
             const isFailed = pred.status === 'failed';

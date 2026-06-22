@@ -255,7 +255,7 @@ export default function RecommendationsPage() {
   return (
     <div className="w-full space-y-6 animate-in fade-in duration-500">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
+      <div id="recommendations-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 shadow-inner">
             <Lightbulb className="w-6 h-6 text-amber-500" />
@@ -285,7 +285,7 @@ export default function RecommendationsPage() {
           </div>
         </Card>
       ) : (
-        <Card className="bg-card/50 backdrop-blur-xl border-border/80 shadow-2xl">
+        <Card id="recommendations-grid" className="bg-card/50 backdrop-blur-xl border-border/80 shadow-2xl">
           <div className="overflow-x-auto w-full">
           <Table style={{ minWidth: '800px', width: '100%' }}>
             <TableHeader className="bg-muted/50">

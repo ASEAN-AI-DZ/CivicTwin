@@ -178,10 +178,10 @@ export default function IncidentsPage() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-6 animate-in fade-in duration-500">
+    <div id="incidents-page" className="w-full max-w-7xl mx-auto space-y-6 animate-in fade-in duration-500">
       
       {/* Header Banner - Redesigned with Glassmorphism & Accent Gradient */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-card/85 to-card/50 p-6 sm:p-8 rounded-2xl border border-border backdrop-blur-xl shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div id="incidents-header" className="relative overflow-hidden bg-gradient-to-r from-card/85 to-card/50 p-6 sm:p-8 rounded-2xl border border-border backdrop-blur-xl shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/5 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         
         <div className="flex items-center gap-4 z-10">
@@ -276,7 +276,7 @@ export default function IncidentsPage() {
       </div>
 
       {/* KPI Stats Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="incidents-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* Card 1: Total incidents */}
         <Card className="p-4 bg-gradient-to-br from-card/80 to-card/40 border border-border backdrop-blur-md shadow-md relative overflow-hidden group hover:border-orange-500/30 transition-all duration-300">
@@ -356,7 +356,7 @@ export default function IncidentsPage() {
       </div>
 
       {/* Search & Filters Row */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-card/30 p-4 rounded-xl border border-border backdrop-blur-md">
+      <div id="incidents-filters" className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-card/30 p-4 rounded-xl border border-border backdrop-blur-md">
         <div className="flex flex-wrap items-center gap-3 flex-1">
           
           {/* Search bar */}
@@ -420,7 +420,7 @@ export default function IncidentsPage() {
       </div>
 
       {/* Table Section */}
-      <Card className="overflow-hidden bg-card/40 border border-border/70 backdrop-blur-xl shadow-2xl rounded-2xl">
+      <Card id="incidents-list" className="overflow-hidden bg-card/40 border border-border/70 backdrop-blur-xl shadow-2xl rounded-2xl">
         {loading ? (
           <div className="overflow-x-auto">
             <Table>
