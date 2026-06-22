@@ -41,12 +41,20 @@ interface KPICardProps {
   sparkColor?: string;
 }
 
+// Border color mapping for KPI left accent
+const accentBorderMap: Record<string, string> = {
+  'from-orange-500 to-amber-500': 'border-l-orange-500',
+  'from-violet-500 to-purple-500': 'border-l-violet-500',
+  'from-blue-500 to-cyan-500': 'border-l-blue-500',
+  'from-emerald-500 to-teal-500': 'border-l-emerald-500',
+};
+
 function Sparkline({ data, color = "#3b82f6" }: { data: number[]; color?: string }) {
   if (data.length < 2) return null;
   const max = Math.max(...data);
   const min = Math.min(...data);
   const range = max - min || 1;
-  const w = 80, h = 28, pad = 2;
+  const w = 100, h = 36, pad = 2;
   const points = data.map((v, i) => `${pad + (i / (data.length - 1)) * (w - pad * 2)},${h - pad - ((v - min) / range) * (h - pad * 2)}`).join(' ');
   const id = `sg-${color.replace('#', '')}`;
   return (
@@ -68,12 +76,12 @@ function KPICardSkeleton() {
     <Card className="bg-card/50 backdrop-blur-xl border-border/80 shadow-lg overflow-hidden">
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-4">
-          <div className="w-10 h-10 rounded-xl bg-muted animate-pulse" />
-          <div className="w-14 h-6 rounded-full bg-muted animate-pulse" />
+          <div className="w-10 h-10 rounded-xl skeleton-shimmer rounded" />
+          <div className="w-14 h-6 rounded-full skeleton-shimmer rounded" />
         </div>
-        <div className="h-8 w-16 bg-muted animate-pulse rounded mb-2" />
-        <div className="h-3 w-28 bg-muted animate-pulse rounded mb-1.5" />
-        <div className="h-3 w-36 bg-muted animate-pulse rounded" />
+        <div className="h-8 w-16 skeleton-shimmer rounded mb-2" />
+        <div className="h-3 w-28 skeleton-shimmer rounded mb-1.5" />
+        <div className="h-3 w-36 skeleton-shimmer rounded" />
       </CardContent>
     </Card>
   );
@@ -82,23 +90,26 @@ function KPICardSkeleton() {
 function SidebarItemSkeleton() {
   return (
     <div className="flex items-start gap-3 p-3 rounded-xl bg-background/50">
-      <div className="w-2 h-2 rounded-full bg-muted animate-pulse mt-2" />
+      <div className="w-2 h-2 rounded-full skeleton-shimmer rounded mt-2" />
       <div className="flex-1 space-y-2">
-        <div className="h-4 w-3/4 bg-muted animate-pulse rounded" />
-        <div className="h-3 w-1/2 bg-muted animate-pulse rounded" />
+        <div className="h-4 w-3/4 skeleton-shimmer rounded" />
+        <div className="h-3 w-1/2 skeleton-shimmer rounded" />
       </div>
     </div>
   );
 }
 
 function KPICard({ title, value, subtitle, icon, trend, accentColor, sparkline, sparkColor }: KPICardProps) {
+  const borderClass = accentBorderMap[accentColor] || 'border-l-blue-500';
   return (
-    <Card className="bg-card/50 backdrop-blur-xl border-border/80 shadow-lg hover:shadow-xl hover:border-border transition-all group relative overflow-hidden">
-      <div className={`absolute inset-0 bg-gradient-to-br ${accentColor} opacity-[0.03] group-hover:opacity-[0.06] transition-opacity`} />
+    <Card className={`card-lift bg-card/50 backdrop-blur-xl border-border/80 shadow-lg hover:shadow-xl hover:border-border transition-all group relative overflow-hidden border-l-[3px] ${borderClass}`}>
       <CardContent className="p-5 relative">
         <div className="flex items-start justify-between mb-4">
-          <div className="p-2.5 rounded-xl bg-secondary/80 border border-border/50 group-hover:scale-110 transition-transform">
-            {icon}
+          <div className={`p-3 rounded-2xl bg-gradient-to-br ${accentColor} text-white shadow-lg group-hover:scale-110 transition-transform`}>
+            {/* Re-render icon as white on gradient bg */}
+            <div className="w-6 h-6 [&>svg]:w-6 [&>svg]:h-6 [&>svg]:text-white flex items-center justify-center">
+              {icon}
+            </div>
           </div>
           {trend && (
             <span className={`text-xs font-bold flex items-center gap-1 px-2 py-1 rounded-full ${trend.up ? 'text-rose-500 bg-rose-500/10' : 'text-emerald-500 bg-emerald-500/10'}`}>
@@ -109,12 +120,13 @@ function KPICard({ title, value, subtitle, icon, trend, accentColor, sparkline, 
         </div>
         <div className="flex items-end justify-between gap-2">
           <div>
-            <div className="text-3xl font-heading font-black tracking-tight mb-1">{value}</div>
+            <div className="text-4xl font-heading font-black tracking-tight mb-1">{value}</div>
             <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">{title}</p>
           </div>
           {sparkline && sparkline.length > 1 && <Sparkline data={sparkline} color={sparkColor} />}
         </div>
-        <p className="text-xs text-muted-foreground mt-2 font-medium">{subtitle}</p>
+        <div className="h-px bg-border/50 my-2" />
+        <p className="text-xs text-muted-foreground font-medium">{subtitle}</p>
       </CardContent>
     </Card>
   );
@@ -208,22 +220,28 @@ export default function DashboardPage() {
   return (
     <div className="w-full max-w-[1400px] mx-auto space-y-6 animate-in fade-in duration-500">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 shadow-inner">
-            <Activity className="w-6 h-6 text-blue-500" />
+      <div className="relative bg-card/50 rounded-2xl border border-border backdrop-blur-xl overflow-hidden">
+        {/* Gradient accent bar */}
+        <div className="h-[3px] bg-gradient-to-r from-blue-500 to-cyan-500" />
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 shadow-inner">
+              <Activity className="w-6 h-6 text-blue-500" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-heading font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">{t('op.commandCenter')}</h1>
+              <p className="text-sm text-muted-foreground mt-0.5 flex items-center gap-2">
+                <span className="status-glow text-cyan-500 rounded-full">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse block" />
+                </span>
+                {t('op.systemsOnline')}
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-2xl font-heading font-bold tracking-tight">{t('op.commandCenter')}</h1>
-            <p className="text-sm text-muted-foreground mt-0.5 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              {t('op.systemsOnline')}
-            </p>
+          <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground bg-secondary/80 px-3 py-1.5 rounded-full">
+            <Clock className="w-3.5 h-3.5" />
+            {t('op.lastSync')}: {clockTime}
           </div>
-        </div>
-        <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-          <Clock className="w-3.5 h-3.5" />
-          {t('op.lastSync')}: {clockTime}
         </div>
       </div>
 
@@ -275,12 +293,17 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* Traffic Map — Full Width */}
-      <Card className="bg-card/40 backdrop-blur-xl shadow-2xl overflow-hidden border-border/80">
+      {/* Traffic Map — Full Width with integrated legend */}
+      <Card className="card-lift bg-card/40 backdrop-blur-xl shadow-2xl overflow-hidden border-border/80">
         <CardHeader className="p-4 pb-0 flex flex-row items-center justify-between">
-          <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+          <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
             <Activity className="w-4 h-4 text-blue-500" />
             {t('op.liveTrafficGrid')}
+            {/* LIVE pill badge */}
+            <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              LIVE
+            </span>
             {highlightedEdgeIds.length > 0 && (
               <span className="flex items-center gap-1 text-orange-400 font-bold text-[11px] bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full animate-pulse">
                 <AlertTriangle className="w-3 h-3" />
@@ -293,38 +316,35 @@ export default function DashboardPage() {
           </Link>
         </CardHeader>
         <CardContent className="p-3 pt-2">
-          <div className="h-[500px] rounded-xl overflow-hidden border border-border/50 relative">
+          <div className="h-[550px] rounded-xl overflow-hidden border border-border/50 relative">
             <TrafficMap isPublic={true} highlightedEdgeIds={highlightedEdgeIds} focusIncidentId={focusIncidentId} />
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Traffic Flow Legend */}
-      <Card className="bg-card/40 backdrop-blur-xl border-border/80 shadow-lg">
-        <CardContent className="p-4 flex flex-wrap items-center justify-center gap-6">
-          <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-muted-foreground" />
-            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t('trafficMap.flowIntensity')}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
-            <span className="text-xs text-muted-foreground font-medium">{t('trafficMap.flowNone')}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_6px_rgba(234,179,8,0.6)]" />
-            <span className="text-xs text-muted-foreground font-medium">{t('trafficMap.flowLight')}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.6)]" />
-            <span className="text-xs text-muted-foreground font-medium">{t('trafficMap.flowModerate')}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_6px_rgba(239,68,68,0.6)]" />
-            <span className="text-xs text-muted-foreground font-medium">{t('trafficMap.flowHeavy')}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-full bg-rose-900 shadow-[0_0_6px_rgba(136,19,55,0.6)]" />
-            <span className="text-xs text-muted-foreground font-medium">{t('trafficMap.flowGridlock')}</span>
+          {/* Integrated Flow Legend */}
+          <div className="flex flex-wrap items-center gap-4 pt-3 mt-3 border-t border-border/50">
+            <div className="flex items-center gap-2">
+              <Activity className="w-4 h-4 text-muted-foreground" />
+              <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t('trafficMap.flowIntensity')}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary/50 text-xs">
+              <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
+              <span className="text-muted-foreground font-medium">{t('trafficMap.flowNone')}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary/50 text-xs">
+              <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_6px_rgba(234,179,8,0.6)]" />
+              <span className="text-muted-foreground font-medium">{t('trafficMap.flowLight')}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary/50 text-xs">
+              <div className="w-3 h-3 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.6)]" />
+              <span className="text-muted-foreground font-medium">{t('trafficMap.flowModerate')}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary/50 text-xs">
+              <div className="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_6px_rgba(239,68,68,0.6)]" />
+              <span className="text-muted-foreground font-medium">{t('trafficMap.flowHeavy')}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary/50 text-xs">
+              <div className="w-3 h-3 rounded-full bg-rose-900 shadow-[0_0_6px_rgba(136,19,55,0.6)]" />
+              <span className="text-muted-foreground font-medium">{t('trafficMap.flowGridlock')}</span>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -332,7 +352,7 @@ export default function DashboardPage() {
       {/* Recent Incidents + AI Activity — Same Row */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Recent Incidents */}
-        <Card className="lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
+        <Card className="card-lift lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
           <CardHeader className="p-4 pb-3 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-orange-500" />
@@ -351,13 +371,13 @@ export default function DashboardPage() {
                   <Link
                     key={inc.id}
                     href={`/dashboard/incidents/${inc.id}`}
-                    className="flex items-start gap-3 p-3 rounded-xl bg-background/50 hover:bg-accent/50 border border-transparent hover:border-border transition-all group/item cursor-pointer"
+                    className="timeline-item flex items-start gap-3 p-3 rounded-xl bg-background/50 hover:bg-accent/50 border border-transparent hover:border-border transition-all group/item cursor-pointer"
                   >
-                    <div className="mt-0.5 shrink-0">
-                      <div className={`w-2 h-2 rounded-full mt-1.5 ${inc.status === 'open' ? 'bg-blue-500 animate-pulse' : inc.status === 'investigating' ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500'}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold truncate group-hover/item:text-primary transition-colors">{inc.title}</p>
+                    <div className="flex-1 min-w-0 group-hover/item:translate-x-0.5 transition-transform">
+                      <p className="text-sm font-semibold truncate group-hover/item:text-primary transition-colors">
+                        <span className="text-[10px] font-mono text-muted-foreground/50 mr-1">#{inc.id}</span>
+                        {inc.title}
+                      </p>
                       <div className="flex items-center gap-2 mt-1.5">
                         <Badge className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0 h-5 border ${sev}`}>
                           {t(`enums.incidentSeverity.${inc.severity}`)}
@@ -376,7 +396,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* AI Activity Feed */}
-        <Card className="lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
+        <Card className="card-lift lg:col-span-6 bg-card/40 backdrop-blur-xl shadow-2xl border-border/80">
           <CardHeader className="p-4 pb-3 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
               <Brain className="w-4 h-4 text-violet-500" />
@@ -391,14 +411,14 @@ export default function DashboardPage() {
               {aiFeed.map((ai) => (
                 <div
                   key={ai.id}
-                  className="flex items-start gap-3 p-3 rounded-xl bg-background/50 border border-transparent hover:border-border transition-all"
+                  className="timeline-item flex items-start gap-3 p-3 rounded-xl bg-background/50 border border-transparent hover:border-border transition-all group/item"
                 >
                   <div className="mt-0.5 shrink-0">
-                    <div className={`p-1.5 rounded-lg ${ai.status === 'completed' ? 'bg-emerald-500/10' : 'bg-rose-500/10'}`}>
+                    <div className={`p-2 rounded-xl ${ai.status === 'completed' ? 'bg-emerald-500/10' : 'bg-rose-500/10'}`}>
                       <Zap className={`w-3.5 h-3.5 ${ai.status === 'completed' ? 'text-emerald-500' : 'text-rose-500'}`} />
                     </div>
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 group-hover/item:translate-x-0.5 transition-transform">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-semibold">Job #{ai.id}</p>
                       <Badge variant={ai.status === 'completed' ? 'outline' : 'destructive'} className="text-[9px] uppercase tracking-wider h-5">

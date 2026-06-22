@@ -1,0 +1,29 @@
+{
+  "lstm": {
+    "val_mae": 0.0368,
+    "val_rmse": 0.0485,
+    "val_r2": 0.8241,
+    "best_epoch": 5,
+    "training_time_seconds": 1919.0,
+    "parameters": 52710
+  },
+  "stgcn": {
+    "val_mae": 0.0332,
+    "val_rmse": 0.0438,
+    "val_r2": 0.8915,
+    "best_epoch": 15,
+    "training_time_seconds": 3098.6,
+    "parameters": 75078
+  },
+  "improvement": {
+    "mae_reduction_pct": 9.78,
+    "rmse_reduction_pct": 9.69
+  },
+  "config": {
+    "seq_len": 12,
+    "pred_len": 6,
+    "num_nodes": 20,
+    "hidden_size": 64,
+    "epochs": 20
+  }
+}

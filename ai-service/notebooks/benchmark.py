@@ -153,7 +153,7 @@ def main():
     print("=" * 65)
     print("  BENCHMARK RESULTS")
     print("=" * 65)
-    print(f"  {'Metric':<20} {'LSTM':>10} {'ST-GCN':>10} {'Δ Improvement':>14}")
+    print(f"  {'Metric':<20} {'LSTM':>10} {'ST-GCN':>10} {'Delta Imp.':>14}")
     print(f"  {'-'*54}")
     print(f"  {'MAE':<20} {lstm_mae:>10.4f} {stgcn_mae:>10.4f} {mae_improvement:>+13.1f}%")
     print(f"  {'RMSE':<20} {lstm_rmse:>10.4f} {stgcn_rmse:>10.4f} {rmse_improvement:>+13.1f}%")

@@ -96,17 +96,26 @@ class GraphSeeder extends Seeder
         DB::statement("
             INSERT INTO sensors (sensor_code, edge_id, type, model, status, metadata, created_at, updated_at) VALUES
             ('SENSOR-CR-001', 3, 'traffic_counter', 'DS-2CD2T45', 'online', '{\"manufacturer\": \"Hikvision\"}', NOW(), NOW()),
-            ('SENSOR-CR-002', 3, 'camera_feed', 'DS-2CD2T45', 'online', '{\"manufacturer\": \"Hikvision\", \"resolution\": \"4K\"}', NOW(), NOW()),
+            ('SENSOR-CR-002', 3, 'camera_feed', 'DS-2CD2T45', 'online', '{\"manufacturer\": \"Hikvision\", \"resolution\": \"4K\", \"video_url\": \"https://assets.mixkit.co/videos/preview/mixkit-traffic-in-a-large-city-street-4509-large.mp4\"}', NOW(), NOW()),
             ('SENSOR-CSH-001', 8, 'traffic_counter', 'P1445-LE', 'online', '{\"manufacturer\": \"Axis\"}', NOW(), NOW()),
             ('SENSOR-DBP-001', 2, 'traffic_counter', 'DS-2CD2T45', 'online', '{\"manufacturer\": \"Hikvision\"}', NOW(), NOW()),
-            ('SENSOR-NVL-001', 12, 'camera_feed', 'IPC-HFW2431T', 'online', '{\"manufacturer\": \"Dahua\", \"resolution\": \"2K\"}', NOW(), NOW()),
+            ('SENSOR-NVL-001', 12, 'camera_feed', 'IPC-HFW2431T', 'online', '{\"manufacturer\": \"Dahua\", \"resolution\": \"2K\", \"video_url\": \"https://assets.mixkit.co/videos/preview/mixkit-highway-traffic-at-night-42173-large.mp4\"}', NOW(), NOW()),
             ('SENSOR-MK-001', 17, 'weather_station', 'Vantage Pro2', 'online', '{\"manufacturer\": \"Davis\"}', NOW(), NOW()),
             ('SENSOR-SB-001', 14, 'traffic_counter', 'DS-2CD2T45', 'online', '{\"manufacturer\": \"Hikvision\"}', NOW(), NOW()),
-            ('SENSOR-TP-001', 11, 'camera_feed', 'P1445-LE', 'online', '{\"manufacturer\": \"Axis\"}', NOW(), NOW()),
+            ('SENSOR-TP-001', 11, 'camera_feed', 'P1445-LE', 'online', '{\"manufacturer\": \"Axis\", \"resolution\": \"1080p\", \"video_url\": \"https://assets.mixkit.co/videos/preview/mixkit-cars-driving-in-the-rain-42163-large.mp4\"}', NOW(), NOW()),
             ('SENSOR-NTP-001', 9, 'traffic_counter', 'DS-2CD2T45', 'online', '{\"manufacturer\": \"Hikvision\"}', NOW(), NOW()),
             ('SENSOR-NHS-001', 15, 'weather_station', 'Vantage Pro2', 'online', '{\"manufacturer\": \"Davis\"}', NOW(), NOW()),
             ('SENSOR-PVD-001', 10, 'traffic_counter', 'P1445-LE', 'offline', '{\"manufacturer\": \"Axis\", \"error\": \"Connection timeout\"}', NOW(), NOW()),
             ('SENSOR-NBH-001', 19, 'traffic_counter', 'DS-2CD2T45', 'online', '{\"manufacturer\": \"Hikvision\"}', NOW(), NOW())
+        ");
+
+        // ==========================================
+        // CẬP NHẬT TỐC ĐỘ THỰC TẾ (SPEED) CHO TẤT CẢ EDGES
+        // ==========================================
+        DB::statement("
+            UPDATE edges
+            SET current_speed_kmh = ROUND((speed_limit_kmh * (1.0 - current_density) * 0.9)::numeric, 1)
+            WHERE current_speed_kmh = 0 OR current_speed_kmh IS NULL
         ");
     }
 }

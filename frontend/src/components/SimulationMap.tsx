@@ -177,6 +177,8 @@ export default function SimulationMap({ segments, isRunning, hasResult }: Simula
         setLoading(false);
       }
 
+      if (!map.current) return;
+
       // Hover popup for affected edges
       map.current.on('mouseenter', 'sim-affected', (e) => {
         if (!map.current || !e.features?.[0]) return;

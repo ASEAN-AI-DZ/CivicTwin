@@ -55,7 +55,7 @@ export default function Sidebar() {
       }`}
     >
       {/* Logo Area */}
-      <div className="flex items-center gap-3 p-4 h-[72px] border-b border-border bg-muted/20">
+      <div className="flex items-center gap-3 p-4 h-[72px] border-b border-border/60 bg-muted/30">
         <div className="flex items-center justify-center shrink-0 relative group">
           <Image src="/logo.png" alt="CivicTwin AI Logo" width={40} height={40} className="object-contain w-10 h-10 relative z-10 drop-shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-transform duration-300 group-hover:scale-110" unoptimized />
         </div>
@@ -87,11 +87,11 @@ export default function Sidebar() {
               href={item.href}
               className={`flex items-center gap-3 px-3 min-h-[44px] rounded-xl transition-all duration-200 group cursor-pointer ${
                 isActive
-                  ? 'bg-primary/10 text-primary font-semibold'
+                  ? 'nav-active-bar bg-blue-500/8 border border-blue-500/15 text-primary font-semibold'
                   : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground font-medium'
               }`}
             >
-              <item.icon className={`w-5 h-5 shrink-0 transition-transform ${isActive ? 'scale-110 text-primary' : 'group-hover:scale-110'}`} />
+              <item.icon className={`w-5 h-5 shrink-0 transition-transform ${isActive ? 'scale-110 text-primary' : 'group-hover:scale-110 group-hover:translate-x-0.5'}`} />
 
               <span className={`text-sm whitespace-nowrap transition-all duration-200 ${collapsed ? 'opacity-0 w-0 hidden' : 'opacity-100 flex-1'}`}>
                 {label}
@@ -107,9 +107,9 @@ export default function Sidebar() {
             return (
               <Tooltip key={item.href}>
                 <TooltipTrigger render={<Link href={item.href} />} className={`flex items-center gap-3 px-3 min-h-[44px] rounded-xl transition-all duration-200 group cursor-pointer ${
-                  isActive ? 'bg-primary/10 text-primary font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground font-medium'
+                  isActive ? 'nav-active-bar bg-blue-500/8 border border-blue-500/15 text-primary font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground font-medium'
                 }`}>
-                  <item.icon className={`w-5 h-5 shrink-0 transition-transform ${isActive ? 'scale-110 text-primary' : 'group-hover:scale-110'}`} />
+                  <item.icon className={`w-5 h-5 shrink-0 transition-transform ${isActive ? 'scale-110 text-primary' : 'group-hover:scale-110 group-hover:translate-x-0.5'}`} />
                 </TooltipTrigger>
                 <TooltipContent side="right" sideOffset={8}>
                   {label}
@@ -125,7 +125,7 @@ export default function Sidebar() {
       {/* User Profile */}
       <div className="p-3 border-t border-border bg-muted/10">
         <div className="flex items-center gap-3 px-2 py-2 mb-2 rounded-xl bg-card border border-border/50 hover:border-border transition-colors">
-          <div className="w-9 h-9 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-500 font-heading font-bold flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-500 font-heading font-bold flex items-center justify-center shrink-0 hover:ring-2 hover:ring-primary/20 transition-all">
             {user?.name?.[0]?.toUpperCase() || '?'}
           </div>
           
@@ -146,9 +146,9 @@ export default function Sidebar() {
         </div>
 
         {/* Language & Theme Toggle */}
-        <div className={`flex items-center ${collapsed ? 'justify-center flex-col gap-2' : 'justify-between px-2'} pt-1`}>
+        <div className={`flex items-center ${collapsed ? 'justify-center flex-col gap-2' : 'justify-between px-2'} pt-2`}>
           {!collapsed && <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{t('sidebar.theme')}</span>}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <NotificationBell collapsed={collapsed} />
             <LanguageSwitcher />
             <ThemeToggle collapsed={collapsed} />

@@ -41,12 +41,15 @@ class SensorReadingSeeder extends Seeder
 
         $now = now();
         $records = [];
+        $sensors = DB::table('sensors')->get();
 
-        // 12 readings per edge, one per hour for the past 12 hours
-        for ($hour = 11; $hour >= 0; $hour--) {
-            $recordedAt = $now->copy()->subHours($hour);
+        // 24 readings per sensor, one per 30 minutes for the past 12 hours (to enrich data & UI chart)
+        for ($step = 23; $step >= 0; $step--) {
+            $recordedAt = $now->copy()->subMinutes($step * 30);
 
-            foreach ($edgeConfigs as $edgeId => $config) {
+            foreach ($sensors as $sensor) {
+                $edgeId = $sensor->edge_id;
+                $config = $edgeConfigs[$edgeId] ?? [0.40, 0.15, [6, 7]];
                 [$base, $variation, $spikeHours] = $config;
 
                 // Hour-of-day pattern: 5-9 = rush, 11-14 = lunch, 16-20 = rush
@@ -71,7 +74,7 @@ class SensorReadingSeeder extends Seeder
 
                 $records[] = [
                     'edge_id'       => $edgeId,
-                    'sensor_id'     => $edgeId, // sensor matches edge id for simplicity
+                    'sensor_id'     => $sensor->id,
                     'recorded_at'   => $recordedAt->format('Y-m-d H:i:s'),
                     'vehicle_count' => $vehicleCount,
                     'avg_speed_kmh' => round($avgSpeed, 2),
@@ -88,6 +91,6 @@ class SensorReadingSeeder extends Seeder
             DB::table('sensor_readings')->insert($chunk);
         }
 
-        $this->command->info('Seeded ' . count($records) . ' sensor readings for ' . count($edgeConfigs) . ' edges.');
+        $this->command->info('Seeded ' . count($records) . ' sensor readings for ' . count($sensors) . ' active sensors.');
     }
 }

@@ -50,7 +50,14 @@ class RecommendationController extends Controller
             'approved_at' => now(),
         ]);
 
-        broadcast(new RecommendationGenerated($recommendation, 'approved'));
+        try {
+            broadcast(new RecommendationGenerated($recommendation, 'approved'));
+        } catch (\Throwable $e) {
+            Log::warning('websocket.broadcast_failed', [
+                'event' => 'RecommendationGenerated',
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         $this->dispatchRecommendationNotifications($recommendation, $request->user(), 'approve');
 
