@@ -5,7 +5,7 @@ import api from '@/lib/api';
 import { useTranslation } from '@/lib/i18n';
 import {
   Lightbulb, Check, X, Clock, Shield, Route, Bell,
-  ChevronDown, ChevronRight, Brain, TrendingUp, AlertTriangle,
+  ChevronDown, ChevronRight, Brain, TrendingUp, AlertTriangle, Loader2,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -202,38 +202,60 @@ export default function RecommendationsPage() {
   const [loading, setLoading] = useState(true);
   const [rejectId, setRejectId] = useState<number | null>(null);
   const [reason, setReason] = useState('');
+  const [submittingId, setSubmittingId] = useState<number | null>(null);
 
-  const fetchRecs = async () => {
-    setLoading(true);
+  const fetchRecs = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const res = await api.get('/recommendations');
       setRecs(res.data.data || []);
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => { fetchRecs(); }, []);
 
   const handleApprove = async (id: number) => {
-    await api.patch(`/recommendations/${id}/approve`);
-    fetchRecs();
+    if (submittingId) return;
+    setSubmittingId(id);
+    try {
+      await api.patch(`/recommendations/${id}/approve`);
+      // Update UI in-place immediately for high responsiveness
+      setRecs(prev => prev.map(r => r.id === id ? { ...r, status: 'approved' } : r));
+      // Sync with server in the background without showing full-page loader
+      await fetchRecs(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmittingId(null);
+    }
   };
 
   const handleReject = async () => {
-    if (!rejectId || !reason) return;
-    await api.patch(`/recommendations/${rejectId}/reject`, { reason });
-    setRejectId(null);
-    setReason('');
-    fetchRecs();
+    if (!rejectId || !reason || submittingId) return;
+    const currentRejectId = rejectId;
+    setSubmittingId(currentRejectId);
+    try {
+      await api.patch(`/recommendations/${currentRejectId}/reject`, { reason });
+      setRejectId(null);
+      setReason('');
+      // Update UI in-place immediately
+      setRecs(prev => prev.map(r => r.id === currentRejectId ? { ...r, status: 'rejected', rejected_reason: reason } : r));
+      await fetchRecs(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmittingId(null);
+    }
   };
 
   return (
     <div className="w-full space-y-6 animate-in fade-in duration-500">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
+      <div id="recommendations-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 shadow-inner">
             <Lightbulb className="w-6 h-6 text-amber-500" />
@@ -263,7 +285,7 @@ export default function RecommendationsPage() {
           </div>
         </Card>
       ) : (
-        <Card className="bg-card/50 backdrop-blur-xl border-border/80 shadow-2xl">
+        <Card id="recommendations-grid" className="bg-card/50 backdrop-blur-xl border-border/80 shadow-2xl">
           <div className="overflow-x-auto w-full">
           <Table style={{ minWidth: '800px', width: '100%' }}>
             <TableHeader className="bg-muted/50">
@@ -326,6 +348,7 @@ export default function RecommendationsPage() {
                             size="sm"
                             className="h-8 border-destructive/30 text-destructive hover:bg-destructive/10 shrink-0"
                             onClick={() => setRejectId(rec.id)}
+                            disabled={submittingId !== null}
                           >
                             <X className="w-4 h-4 mr-1" /> {t('op.decline')}
                           </Button>
@@ -333,8 +356,14 @@ export default function RecommendationsPage() {
                             size="sm"
                             className="h-8 bg-emerald-500 hover:bg-emerald-600 shadow-sm shrink-0"
                             onClick={() => handleApprove(rec.id)}
+                            disabled={submittingId !== null}
                           >
-                            <Check className="w-4 h-4 mr-1" /> {t('op.approve')}
+                            {submittingId === rec.id ? (
+                              <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                            ) : (
+                              <Check className="w-4 h-4 mr-1" />
+                            )}
+                            {t('op.approve')}
                           </Button>
                         </div>
                       ) : (
@@ -376,10 +405,19 @@ export default function RecommendationsPage() {
           </div>
 
           <DialogFooter className="sm:justify-end gap-2">
-            <Button variant="secondary" onClick={() => { setRejectId(null); setReason(''); }}>
+            <Button
+              variant="secondary"
+              onClick={() => { setRejectId(null); setReason(''); }}
+              disabled={submittingId !== null}
+            >
               {t('common.cancel')}
             </Button>
-            <Button variant="destructive" onClick={handleReject} disabled={!reason}>
+            <Button
+              variant="destructive"
+              onClick={handleReject}
+              disabled={!reason || submittingId !== null}
+            >
+              {submittingId === rejectId && <Loader2 className="w-4 h-4 mr-1 animate-spin" />}
               {t('op.confirmDecline')}
             </Button>
           </DialogFooter>

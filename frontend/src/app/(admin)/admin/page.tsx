@@ -52,33 +52,53 @@ export default function AdminPage() {
     fetchData();
   }, []);
 
+  // KPI definitions with gradient colors for icon containers and stat bars
+  const KPI_GRADIENTS = [
+    { from: 'from-blue-500', to: 'to-blue-600', bar: '#3b82f6' },
+    { from: 'from-rose-500', to: 'to-rose-600', bar: '#f43f5e' },
+    { from: 'from-cyan-500', to: 'to-cyan-600', bar: '#06b6d4' },
+    { from: 'from-amber-500', to: 'to-amber-600', bar: '#f59e0b' },
+    { from: 'from-violet-500', to: 'to-violet-600', bar: '#8b5cf6' },
+    { from: 'from-orange-500', to: 'to-orange-600', bar: '#f97316' },
+  ];
+
   const kpis = stats ? [
-    { label: t('admin.totalUsers'), value: stats.total_users, icon: <Users className="w-4 h-4 text-blue-500" /> },
-    { label: t('admin.activeIncidents'), value: stats.active_incidents, icon: <AlertTriangle className="w-4 h-4 text-rose-500" /> },
-    { label: t('admin.mapNodes'), value: stats.total_nodes, icon: <Database className="w-4 h-4 text-cyan-500" /> },
-    { label: t('admin.mapEdges'), value: stats.total_edges, icon: <Zap className="w-4 h-4 text-amber-500" /> },
-    { label: t('admin.aiSuccess'), value: stats.total_predictions > 0 ? `${Math.round((stats.completed_predictions / stats.total_predictions) * 100)}%` : 'N/A', icon: <Brain className="w-4 h-4 text-violet-500" /> },
-    { label: t('admin.pendingActions'), value: stats.pending_recommendations, icon: <Clock className="w-4 h-4 text-orange-500" /> },
+    { label: t('admin.totalUsers'), value: stats.total_users, icon: <Users className="w-5 h-5 text-white" /> },
+    { label: t('admin.activeIncidents'), value: stats.active_incidents, icon: <AlertTriangle className="w-5 h-5 text-white" /> },
+    { label: t('admin.mapNodes'), value: stats.total_nodes, icon: <Database className="w-5 h-5 text-white" /> },
+    { label: t('admin.mapEdges'), value: stats.total_edges, icon: <Zap className="w-5 h-5 text-white" /> },
+    { label: t('admin.aiSuccess'), value: stats.total_predictions > 0 ? `${Math.round((stats.completed_predictions / stats.total_predictions) * 100)}%` : 'N/A', icon: <Brain className="w-5 h-5 text-white" /> },
+    { label: t('admin.pendingActions'), value: stats.pending_recommendations, icon: <Clock className="w-5 h-5 text-white" /> },
   ] : [];
+
+  // Compute rough bar width from KPI value
+  const getBarWidth = (value: string | number): number => {
+    if (typeof value === 'string') {
+      const num = parseInt(value, 10);
+      return isNaN(num) ? 15 : Math.min(num, 100);
+    }
+    if (value === 0) return 5;
+    return Math.min(Math.max(Math.round((Number(value) / (Number(value) + 20)) * 100), 8), 95);
+  };
 
   return (
     <div className="w-full max-w-[1400px] mx-auto space-y-6 animate-in fade-in duration-500">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-2xl border border-border backdrop-blur-xl">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0 shadow-inner">
-            <ShieldCheck className="w-6 h-6 text-purple-500" />
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 shadow-lg flex items-center justify-center shrink-0">
+            <ShieldCheck className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-heading font-bold tracking-tight">{t('admin.title')}</h1>
+            <h1 className="text-3xl font-heading font-bold tracking-tight">{t('admin.title')}</h1>
             <p className="text-sm text-muted-foreground mt-0.5 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               {t('admin.subtitle')}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-          <Shield className="w-3.5 h-3.5 text-purple-500" />
+        <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground bg-teal-500/10 border border-teal-500/20 px-3 py-1.5 rounded-full">
+          <Shield className="w-3.5 h-3.5 text-teal-500" />
           {t('admin.superAdminAccess')}
         </div>
       </div>
@@ -86,16 +106,23 @@ export default function AdminPage() {
       {/* KPI Row */}
       {loading ? (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="w-6 h-6 text-purple-500 animate-spin" />
+          <Loader2 className="w-6 h-6 text-teal-500 animate-spin" />
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {kpis.map((stat, i) => (
-            <Card key={i} className="bg-card/50 backdrop-blur-xl border-border/80">
-              <CardContent className="p-4 text-center">
-                <div className="flex justify-center mb-2">{stat.icon}</div>
-                <p className="text-xl font-heading font-black">{stat.value}</p>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">{stat.label}</p>
+            <Card key={i} className="card-lift bg-card/50 backdrop-blur-xl border-border/80">
+              <CardContent className="p-5 flex items-center gap-4">
+                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${KPI_GRADIENTS[i].from} ${KPI_GRADIENTS[i].to} flex items-center justify-center shadow-md shrink-0`}>
+                  {stat.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-2xl font-heading font-black">{stat.value}</p>
+                  <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">{stat.label}</p>
+                  <div className="stat-bar mt-3">
+                    <div className="stat-bar-fill" style={{ width: `${getBarWidth(stat.value)}%`, background: KPI_GRADIENTS[i].bar }} />
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -106,17 +133,19 @@ export default function AdminPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {QUICK_LINKS.map((link) => (
           <Link key={link.href} href={link.href}>
-            <Card className="bg-card/50 backdrop-blur-xl border-border/80 hover:border-primary/30 hover:shadow-xl transition-all cursor-pointer group h-full">
+            <Card className="card-lift relative overflow-hidden bg-card/50 backdrop-blur-xl border-border/80 hover:border-primary/30 hover:shadow-xl transition-all cursor-pointer group h-full">
               <CardContent className="p-5">
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center border mb-4 group-hover:scale-110 transition-transform ${link.color}`}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border mb-4 group-hover:scale-110 transition-transform ${link.color}`}>
                   <link.icon className="w-5 h-5" />
                 </div>
                 <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">{link.label}</h3>
                 <p className="text-xs text-muted-foreground font-medium">{link.description}</p>
                 <div className="flex justify-end mt-3">
-                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-1.5 group-hover:text-primary transition-all" />
                 </div>
               </CardContent>
+              {/* Gradient hover overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
             </Card>
           </Link>
         ))}
@@ -135,12 +164,21 @@ export default function AdminPage() {
             </CardHeader>
             <CardContent className="p-4 pt-0">
               <div className="space-y-2">
-                {Object.entries(stats.incidents_by_type || {}).map(([type, count]) => (
-                  <div key={type} className="flex items-center justify-between p-2.5 rounded-lg bg-background/50 border border-transparent hover:border-border transition-all">
-                    <span className="text-sm font-medium capitalize">{t(`enums.incidentType.${type}`)}</span>
-                    <Badge variant="outline" className="font-heading font-bold">{String(count)}</Badge>
-                  </div>
-                ))}
+                {(() => {
+                  const entries = Object.entries(stats.incidents_by_type || {});
+                  const maxCount = Math.max(...entries.map(([, c]) => Number(c)), 1);
+                  return entries.map(([type, count]) => (
+                    <div key={type} className="flex items-center justify-between p-2.5 rounded-lg bg-background/50 border border-transparent hover:border-border transition-all">
+                      <span className="text-sm font-medium capitalize shrink-0">{t(`enums.incidentType.${type}`)}</span>
+                      <div className="flex-1 mx-3">
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill bg-orange-500/80" style={{ width: `${(Number(count) / maxCount) * 100}%` }} />
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="font-heading font-bold shrink-0">{String(count)}</Badge>
+                    </div>
+                  ));
+                })()}
               </div>
             </CardContent>
           </Card>
@@ -155,12 +193,21 @@ export default function AdminPage() {
             </CardHeader>
             <CardContent className="p-4 pt-0">
               <div className="space-y-2">
-                {Object.entries(stats.users_by_role || {}).map(([role, count]) => (
-                  <div key={role} className="flex items-center justify-between p-2.5 rounded-lg bg-background/50 border border-transparent hover:border-border transition-all">
-                    <span className="text-sm font-medium">{t(`enums.roles.${role}`)}</span>
-                    <Badge variant="outline" className="font-heading font-bold">{String(count)}</Badge>
-                  </div>
-                ))}
+                {(() => {
+                  const entries = Object.entries(stats.users_by_role || {});
+                  const maxCount = Math.max(...entries.map(([, c]) => Number(c)), 1);
+                  return entries.map(([role, count]) => (
+                    <div key={role} className="flex items-center justify-between p-2.5 rounded-lg bg-background/50 border border-transparent hover:border-border transition-all">
+                      <span className="text-sm font-medium shrink-0">{t(`enums.roles.${role}`)}</span>
+                      <div className="flex-1 mx-3">
+                        <div className="stat-bar">
+                          <div className="stat-bar-fill bg-blue-500/80" style={{ width: `${(Number(count) / maxCount) * 100}%` }} />
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="font-heading font-bold shrink-0">{String(count)}</Badge>
+                    </div>
+                  ));
+                })()}
               </div>
             </CardContent>
           </Card>
@@ -184,9 +231,9 @@ export default function AdminPage() {
           ) : (
             <div className="space-y-2">
               {logs.map((log: any) => (
-                <div key={log.id} className="flex items-start gap-3 p-3 rounded-xl bg-background/50 border border-transparent hover:border-border transition-all">
-                  <div className="mt-0.5 shrink-0">
-                    <div className={`w-2 h-2 rounded-full mt-1.5 ${log.event === 'created' ? 'bg-emerald-500' : log.event === 'updated' ? 'bg-blue-500' : 'bg-amber-500'}`} />
+                <div key={log.id} className="timeline-item flex items-start gap-3 p-3 rounded-xl bg-background/50 border border-transparent hover:border-border transition-all">
+                  <div className="p-1.5 rounded-lg bg-secondary/80 shrink-0 mt-0.5">
+                    <div className={`w-2 h-2 rounded-full ${log.event === 'created' ? 'bg-emerald-500' : log.event === 'updated' ? 'bg-blue-500' : 'bg-amber-500'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium">{log.description}</p>

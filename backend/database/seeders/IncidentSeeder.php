@@ -168,5 +168,73 @@ class IncidentSeeder extends Seeder
                 );
             }
         }
+
+        // ==========================================
+        // SINH SỰ CỐ NGẪU NHIÊN (FAKER) TẠI ĐÀ NẴNG
+        // ==========================================
+        $faker = \Faker\Factory::create('vi_VN');
+        $incidentTypes = ['accident', 'congestion', 'road_work', 'flood', 'other'];
+        $severities = ['low', 'medium', 'high', 'critical'];
+        $statuses = ['open', 'investigating', 'resolved', 'closed'];
+        $sources = ['citizen_report', 'operator', 'auto_detected'];
+
+        // Lấy tất cả edges cùng với toạ độ hình học ở định dạng Text để định vị sự cố
+        $edges = DB::table('edges')->select('id', DB::raw('ST_AsText(geometry) as geom_text'))->get()->toArray();
+
+        if (count($edges) > 0) {
+            for ($i = 0; $i < 35; $i++) {
+                $type = $faker->randomElement($incidentTypes);
+                $severity = $faker->randomElement($severities);
+                $status = $faker->randomElement($statuses);
+                $source = $faker->randomElement($sources);
+
+                $title = match($type) {
+                    'accident' => "Tai nạn giao thông trên đường " . $faker->streetName,
+                    'congestion' => "Kẹt xe cục bộ tại khu vực " . $faker->streetName,
+                    'road_work' => "Thi công sửa chữa đường " . $faker->streetName,
+                    'flood' => "Ngập úng cục bộ đường " . $faker->streetName,
+                    default => "Sự cố giao thông trên đường " . $faker->streetName,
+                };
+
+                $description = $faker->sentence(10);
+                // User ID 7 hoặc 8 là Citizen (xem UserSeeder)
+                $reportedBy = $faker->randomElement([7, 8]);
+                // Operator có ID là 3 hoặc 4
+                $assignedTo = $status !== 'open' ? $faker->randomElement([3, 4]) : null;
+                $resolvedAt = ($status === 'resolved' || $status === 'closed') ? now()->subMinutes(mt_rand(10, 300)) : null;
+
+                // Chọn ngẫu nhiên 1 edge để gắn sự cố vào
+                $randomEdge = $edges[array_rand($edges)];
+                
+                // Trích xuất tọa độ điểm đầu tiên của Edge (LineString) để làm vị trí sự cố
+                $lng = 108.22;
+                $lat = 16.06;
+                if (preg_match('/LINESTRING\(([\d\.]+)\s+([\d\.]+)/', $randomEdge->geom_text, $matches)) {
+                    $lng = (float)$matches[1];
+                    $lat = (float)$matches[2];
+                }
+
+                $incident = Incident::create([
+                    'title' => $title,
+                    'description' => $description,
+                    'type' => $type,
+                    'severity' => $severity,
+                    'status' => $status,
+                    'source' => $source,
+                    'reported_by' => $reportedBy,
+                    'assigned_to' => $assignedTo,
+                    'resolved_at' => $resolvedAt,
+                    'affected_edge_ids' => DB::raw("ARRAY[" . $randomEdge->id . "]::bigint[]"),
+                    'metadata' => ['generated' => true],
+                ]);
+
+                if ($isPostgres) {
+                    DB::statement(
+                        'UPDATE incidents SET location = ST_SetSRID(ST_Point(?, ?), 4326) WHERE id = ?',
+                        [$lng, $lat, $incident->id]
+                    );
+                }
+            }
+        }
     }
 }

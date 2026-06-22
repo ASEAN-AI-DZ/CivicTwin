@@ -109,7 +109,7 @@ export default function SimulationPage() {
   return (
     <div className="w-full max-w-[1400px] mx-auto space-y-6 animate-in fade-in duration-500 pb-8">
       {/* ─── Header ─── */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div id="simulation-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center shrink-0">
             <FlaskConical className="w-6 h-6 text-violet-500" />
@@ -131,7 +131,7 @@ export default function SimulationPage() {
         {/* ── Left Panel: Controls / Results ── */}
         <div className="lg:col-span-4 space-y-4">
           {/* Controls */}
-          <Card className="bg-card/50 backdrop-blur-xl">
+          <Card id="simulation-config" className="bg-card/50 backdrop-blur-xl">
             <CardHeader className="pb-3">
               <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                 <Layers className="w-4 h-4 text-violet-500" />
@@ -269,7 +269,7 @@ export default function SimulationPage() {
         {/* ── Right Panel: Map + Segments ── */}
         <div className="lg:col-span-8 space-y-4">
           {/* Simulation Map */}
-          <Card className="bg-card/40 backdrop-blur-xl shadow-2xl overflow-hidden">
+          <Card id="simulation-map" className="bg-card/40 backdrop-blur-xl shadow-2xl overflow-hidden">
             <CardContent className="p-2">
               <div className="h-[450px] rounded-xl overflow-hidden border border-border/50">
                 <SimulationMap
@@ -283,7 +283,7 @@ export default function SimulationPage() {
 
           {/* Segment Impact Table */}
           {result && segments.length > 0 && (
-            <Card className="bg-card/40 backdrop-blur-xl shadow-2xl animate-in slide-in-from-bottom-4 duration-500">
+            <Card id="simulation-results" className="bg-card/40 backdrop-blur-xl shadow-2xl animate-in slide-in-from-bottom-4 duration-500">
               <CardHeader className="p-4 pb-2">
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                   <Gauge className="w-4 h-4 text-orange-500" />

@@ -88,6 +88,13 @@ class IncidentController extends Controller
             $query->where('severity', $request->severity);
         }
 
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
+        }
+
         $incidents = $query->paginate($request->get('per_page', 15));
 
         return ApiResponse::paginate($incidents, 'api.incidents_retrieved');

@@ -1,0 +1,20 @@
+# CivicTwinAI — YOLOv8 Custom Dataset Configuration Template
+# Hướng dẫn: 
+# 1. Đặt đường dẫn tuyệt đối hoặc tương đối tới thư mục dataset của bạn ở trường `path`.
+# 2. Tạo các thư mục con `images/train`, `images/val`, `labels/train`, `labels/val` bên trong thư mục đó.
+# 3. Label dữ liệu của bạn và gán ID tương ứng với danh sách lớp (names) ở dưới.
+
+# 1. Đường dẫn thư mục gốc chứa dataset
+path: ./dataset  # Có thể thay bằng đường dẫn tuyệt đối, e.g., C:/Users/YourName/datasets/traffic
+
+# 2. Thư mục con chứa ảnh huấn luyện và kiểm thử (tính từ thư mục gốc `path`)
+train: images/train  # Thư mục chứa ảnh train
+val: images/val      # Thư mục chứa ảnh validation/test
+
+# 3. Danh mục nhãn phân lớp (Classes)
+names:
+  0: car           # Ô tô con
+  1: motorbike     # Xe máy, xe hai bánh
+  2: bus           # Xe buýt
+  3: truck         # Xe tải
+  4: ambulance     # Xe cứu thương / ưu tiên (để phục vụ tính năng Priority Route)
