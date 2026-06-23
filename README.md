@@ -7,6 +7,9 @@
   <a href="https://asean-ai-dz.github.io/CivicTwinDocument/en/intro/">
     <img src="https://img.shields.io/badge/📚_Documentation-CivicTwin-1976D2?style=for-the-badge" alt="Documentation"/>
   </a>
+  <a href="https://www.youtube.com/watch?v=iQEpdDFsiYw">
+    <img src="https://img.shields.io/badge/🎥_Demo-CivicTwin-EB907C?style=for-the-badge" alt="Demo"/>
+  </a>
   <br/>
   
   <a href="LICENSE">
@@ -142,6 +145,34 @@ When an incident occurs, the system not only displays the current situation but 
 | **Artificial Intelligence (AI)** | `Amazon Bedrock` | Provides infrastructure to run large language models and prediction models, supporting scenario analysis and urban resource optimization. |
 | **Core Database (Database)** | `PostgreSQL + PostGIS` | Stores and processes complex spatial data, performing geometric operations such as intersection tests, buffering, and distance calculations. |
 | **Connection (Real-time)** | `WebSockets` | Maintains constant two-way connection, ensuring IoT sensor data is updated on the map in real-time. |
+
+---
+
+## 🏗️ System Architecture
+
+![System Architecture](/static/img/Architecture.png)
+
+CivicTwin AI is organized as a modular, service-oriented platform where data ingestion, urban intelligence, realtime delivery, and user-facing applications can evolve independently while sharing the same city Digital Twin foundation.
+
+### Core Layers
+
+| Layer | Main Components | Responsibility |
+|-------|-----------------|----------------|
+| **Client Layer** | `Next.js Web App`, `React Native Mobile App` | Provides dashboards, interactive maps, citizen reporting, emergency views, and realtime alerts. |
+| **API & Orchestration Layer** | `Laravel Backend API`, `Queue Worker` | Handles authentication, role-based workflows, map/incident APIs, notifications, event dispatching, and coordination between services. |
+| **AI & Simulation Layer** | `Python FastAPI AI Service`, `LSTM/ST-GCN/YOLO models` | Runs traffic prediction, cascading impact analysis, what-if simulation, and traffic detection from video or sensor streams. |
+| **Data Layer** | `PostgreSQL + PostGIS`, `Redis` | Stores users, incidents, spatial road-network data, sensor readings, cached states, and queue workloads. |
+| **Messaging & Realtime Layer** | `MQTT`, `Kafka`, `Soketi WebSocket` | Ingests IoT telemetry, streams events between services, and pushes realtime updates to web/mobile clients. |
+| **External Services** | `Mapbox`, `Firebase FCM`, weather/IoT providers | Supplies base maps, geocoding/routing context, push notifications, and environmental data inputs. |
+
+### Main Data Flow
+
+1. **Sensors, cameras, weather sources, and citizen reports** send raw urban signals into the platform through MQTT/Kafka, REST APIs, or mobile submissions.
+2. **Laravel Backend** validates and normalizes the data, updates PostgreSQL/PostGIS, triggers background jobs, and broadcasts important state changes.
+3. **Python AI Service** receives incident, traffic, and graph data to predict congestion spread, simulate planning scenarios, and generate decision-support outputs.
+4. **Redis and queue workers** keep heavy processing asynchronous so realtime monitoring remains responsive.
+5. **Soketi WebSocket** delivers live map updates, incident changes, alerts, and recommendations to the web dashboard and mobile clients.
+6. **Operators, citizens, and emergency teams** interact with the same Digital Twin through role-specific interfaces, enabling coordinated monitoring, response, and planning.
 
 ---
 
