@@ -81,9 +81,6 @@ When an incident occurs, the system not only displays the current situation but 
 ---
 
 ## 📊 Target Audience
-
-![s](/static/img/doituong.png)
-
 ### 👨‍💼 1. Urban Planners & Government Officials
 
 - Forecast the impact of infrastructure projects before deployment.
@@ -110,7 +107,7 @@ When an incident occurs, the system not only displays the current situation but 
 
 ## 🚀 Key Features of CivicTwin AI
 
-![s](/static/img/chucnang.png)
+![s](/static/img/feature.png)
 
 ### 1. **Real-time Digital Twin**
 
@@ -136,23 +133,9 @@ When an incident occurs, the system not only displays the current situation but 
 
 ---
 
-## 📚 Technologies Used
-
-| Component | Technology | Role in System |
-|------------|-----------------|------------------------|
-| **User Interface (Frontend)** | `Leaflet.js` | Displays interactive maps, overlays data layers such as flooded zones, traffic flows, and Digital Twin entities. |
-| **Logic Processing (Backend)** | `Node.js (Express)` | Serves as the central API coordinator, manages user sessions, and establishes connections to the databases. |
-| **Artificial Intelligence (AI)** | `Amazon Bedrock` | Provides infrastructure to run large language models and prediction models, supporting scenario analysis and urban resource optimization. |
-| **Core Database (Database)** | `PostgreSQL + PostGIS` | Stores and processes complex spatial data, performing geometric operations such as intersection tests, buffering, and distance calculations. |
-| **Connection (Real-time)** | `WebSockets` | Maintains constant two-way connection, ensuring IoT sensor data is updated on the map in real-time. |
-
----
-
 ## 🏗️ System Architecture
 
 ![System Architecture](/static/img/Architecture.png)
-
-CivicTwin AI is organized as a modular, service-oriented platform where data ingestion, urban intelligence, realtime delivery, and user-facing applications can evolve independently while sharing the same city Digital Twin foundation.
 
 ### Core Layers
 
@@ -178,6 +161,8 @@ CivicTwin AI is organized as a modular, service-oriented platform where data ing
 
 ## ⚙️ Basic Setup Guide
 
+### Option 1: Run with Docker
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/ASEAN-AI-DZ/CivicTwin.git
@@ -189,19 +174,114 @@ CivicTwin AI is organized as a modular, service-oriented platform where data ing
    docker compose up -d --build
    ```
 
+### Option 2: Run without Docker
+
+**Prerequisites:**
+- PHP 8.2+, Composer
+- Node.js + Yarn
+- Python 3.10+
+- PostgreSQL with PostGIS enabled
+- Redis
+- Optional for full realtime/IoT flow: Kafka, MQTT broker, and Soketi
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ASEAN-AI-DZ/CivicTwin.git
+   cd CivicTwin
+   ```
+
+2. **Create the database:**
+   ```sql
+   CREATE DATABASE civictwin;
+   \c civictwin
+   CREATE EXTENSION IF NOT EXISTS postgis;
+   ```
+
+3. **Start the backend API:**
+   ```bash
+   cd backend
+   composer install
+   cp .env.example .env
+   ```
+
+   Update `backend/.env` for your local database, Redis, WebSocket, and AI service:
+   ```env
+   DB_CONNECTION=pgsql
+   DB_HOST=127.0.0.1
+   DB_PORT=5432
+   DB_DATABASE=civictwin
+   DB_USERNAME=postgres
+   DB_PASSWORD=secret
+   REDIS_CLIENT=predis
+   REDIS_HOST=127.0.0.1
+   AI_SERVICE_URL=http://127.0.0.1:8001
+   ```
+
+   Then initialize and run Laravel:
+   ```bash
+   php artisan key:generate
+   php artisan migrate --seed
+   php artisan serve --host=127.0.0.1 --port=8000
+   ```
+
+4. **Start the backend queue worker in another terminal:**
+   ```bash
+   cd backend
+   php artisan queue:work --queue=high,default --sleep=3 --tries=3
+   ```
+
+5. **Start the AI service:**
+   ```bash
+   cd ai-service
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   cp .env.example .env
+   ```
+
+   Update `ai-service/.env` if your PostgreSQL credentials are different:
+   ```env
+   DB_HOST=127.0.0.1
+   DB_PORT=5432
+   DB_DATABASE=civictwin
+   DB_USERNAME=postgres
+   DB_PASSWORD=secret
+   ```
+
+   Then run the AI service:
+   ```bash
+   uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
+   ```
+
+   On Windows PowerShell, activate the virtual environment with:
+   ```powershell
+   .\venv\Scripts\Activate.ps1
+   ```
+
+6. **Start the frontend:**
+   ```bash
+   cd frontend
+   yarn install
+   ```
+
+   Make sure `frontend/.env.local` points to the local backend:
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:8000/api
+   NEXT_PUBLIC_WS_HOST=localhost
+   NEXT_PUBLIC_WS_PORT=6001
+   ```
+
+   Then run the frontend:
+   ```bash
+   yarn dev
+   ```
+
+The main local URLs are:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000/api
+- AI service: http://localhost:8001
+
 > Refer to the [Detailed Setup Guide](docs/setup.md) for local development or advanced configuration.
-
----
-
-## 🎯 Conclusion
-
-CivicTwin AI is a comprehensive **Digital Twin + AI** solution for smart urban traffic management. The system not only monitors in real-time but is also capable of predicting the cascading impact of incidents, proposing optimal solutions, and supporting infrastructure planning simulation.
-
-With modern technology and a scalable architecture, CivicTwin AI delivers clear practical value: reducing congestion, speeding up emergency response, and enabling data-driven decision-making.
-
-The project not only addresses today's traffic problems but also contributes to building a foundation for **sustainable smart cities** in Da Nang and other Vietnamese urban centers in the future.
-
-**CivicTwin AI – Smart prediction, safer cities.**
 
 ---
 
@@ -209,7 +289,6 @@ The project not only addresses today's traffic problems but also contributes to 
 
 ### Project Contact
 
-- **Lead Researcher:** [Contact Information]
 - **GitHub Repository:** https://github.com/ASEAN-AI-DZ/CivicTwin
 - **Documentation:** [[Documentation](https://asean-ai-dz.github.io/CivicTwinDocument/en/intro/)]
 
