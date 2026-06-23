@@ -10,6 +10,9 @@
   <a href="https://www.youtube.com/watch?v=iQEpdDFsiYw">
     <img src="https://img.shields.io/badge/🎥_Demo-CivicTwin-EB907C?style=for-the-badge" alt="Demo"/>
   </a>
+  <a href="https://canva.link/ur32qq4dgp03rym">
+    <img src="https://img.shields.io/badge/📖_Slide-CivicTwin-F024EC?style=for-the-badge" alt="Demo"/>
+  </a>
   <br/>
   
   <a href="LICENSE">
